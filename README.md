@@ -6,11 +6,30 @@
 
 Organización: **Servicios Corporativos Andes SpA**
 
-Este repositorio contiene el caso académico de la asignatura DSY1105. El desafío consiste en desarrollar una propuesta tecnológica materializada en un MVP móvil para que clientes de servicios BPO asociados al rubro asegurador puedan consultar y hacer seguimiento del estado de sus siniestros.
+Este repositorio contiene el desarrollo académico de la asignatura DSY1105. El desafío consiste en construir un MVP móvil para que clientes de servicios BPO asociados al rubro asegurador puedan consultar y hacer seguimiento del estado de sus siniestros.
+
+## 📘 Documentación oficial del proyecto
+
+La fuente oficial y actualizada del proyecto es:
+
+**[DOCUMENTACION.md](./DOCUMENTACION.md)**
+
+Este archivo debe mantenerse sincronizado con el desarrollo. Cuando cambie el alcance, un requisito, una decisión técnica, la arquitectura, los modelos, las pantallas, la API o el estado de implementación, también debe actualizarse `DOCUMENTACION.md`.
+
+La documentación distingue entre:
+
+- requisitos del caso oficial,
+- requisitos derivados,
+- requisitos o ajustes definidos por la rúbrica,
+- decisiones técnicas del equipo,
+- funcionalidades implementadas,
+- funcionalidades pendientes.
+
+> GitHub es la fuente oficial de la documentación. Herramientas de comunicación como Discord pueden utilizarse para coordinación o avisos, pero no reemplazan la documentación versionada en este repositorio.
 
 ### Alcance principal
 
-- Registrar o consultar un siniestro.
+- Registrar o consultar un siniestro según el alcance definitivo del caso y la rúbrica.
 - Adjuntar evidencia o documentación.
 - Revisar estado e historial de gestiones.
 - Recibir notificaciones ante cambios relevantes.
@@ -34,43 +53,44 @@ Este repositorio contiene el caso académico de la asignatura DSY1105. El desaf�
 - Microservicios
 - Pruebas unitarias
 
-## 📘 Documentación maestra
-
-La fuente principal de documentación viva del proyecto es:
-
-**[DOCUMENTACION_MAESTRA.md](./docs/DOCUMENTACION_MAESTRA.md)**
-
-Este documento se irá actualizando durante todo el desarrollo y consolida:
-
-- problema y objetivos,
-- alcance,
-- requisitos funcionales y no funcionales,
-- arquitectura,
-- modelo de datos,
-- API REST,
-- pantallas,
-- navegación,
-- backlog,
-- pruebas,
-- trazabilidad,
-- decisiones pendientes,
-- estado del proyecto.
-
 ## Documentación técnica complementaria
 
-1. [Visión y alcance](./docs/00_VISION_Y_ALCANCE.md)
-2. [Arquitectura](./docs/01_ARQUITECTURA.md)
-3. [Diseño funcional y UX](./docs/02_DISENO_FUNCIONAL_Y_UX.md)
-4. [Modelo de datos](./docs/03_MODELO_DE_DATOS.md)
-5. [Contrato API REST](./docs/04_CONTRATO_API_REST.md)
-6. [Plan de implementación](./docs/05_PLAN_DE_IMPLEMENTACION.md)
-7. [Casos de uso](./docs/06_CASOS_DE_USO.md)
-8. [Decisiones técnicas](./docs/07_DECISIONES_TECNICAS.md)
-9. [Mockups funcionales](./docs/08_MOCKUPS_FUNCIONALES.md)
+Los documentos de la carpeta `docs/` amplían temas específicos, pero deben mantenerse coherentes con `DOCUMENTACION.md`.
+
+1. [Documentación maestra histórica](./docs/DOCUMENTACION_MAESTRA.md)
+2. [Visión y alcance](./docs/00_VISION_Y_ALCANCE.md)
+3. [Arquitectura](./docs/01_ARQUITECTURA.md)
+4. [Diseño funcional y UX](./docs/02_DISENO_FUNCIONAL_Y_UX.md)
+5. [Modelo de datos](./docs/03_MODELO_DE_DATOS.md)
+6. [Contrato API REST](./docs/04_CONTRATO_API_REST.md)
+7. [Plan de implementación](./docs/05_PLAN_DE_IMPLEMENTACION.md)
+8. [Casos de uso](./docs/06_CASOS_DE_USO.md)
+9. [Decisiones técnicas](./docs/07_DECISIONES_TECNICAS.md)
+10. [Mockups funcionales](./docs/08_MOCKUPS_FUNCIONALES.md)
 
 ## Documento original del caso
 
-Consulta [CASO_DSY1105_SEGUROS_BPO.md](./CASO_DSY1105_SEGUROS_BPO.md) para ver el caso académico organizado en formato Markdown.
+Consulta [CASO_DSY1105_SEGUROS_BPO.md](./CASO_DSY1105_SEGUROS_BPO.md) para revisar el caso académico en formato Markdown.
+
+## Regla de actualización
+
+El flujo documental del proyecto es:
+
+```text
+Cambio en código o alcance
+        ↓
+Revisar impacto en DOCUMENTACION.md
+        ↓
+Actualizar documentación si corresponde
+        ↓
+Pull Request
+        ↓
+Revisión
+        ↓
+develop
+```
+
+Una tarea que cambie el comportamiento o la estructura relevante del sistema no se considera completamente terminada si la documentación quedó desactualizada.
 
 ## Flujo principal del MVP
 
@@ -92,4 +112,4 @@ Room / SQLite
 Interfaz Compose
 ```
 
-El objetivo inicial es que este flujo funcione de punta a punta antes de agregar funciones secundarias.
+El objetivo es completar este recorrido de punta a punta antes de agregar funciones que no sean necesarias para el caso o la rúbrica.

@@ -6,19 +6,65 @@
 **Proyecto:** Seguimiento móvil del estado de siniestros para clientes de servicios BPO  
 **Organización del caso:** Servicios Corporativos Andes SpA  
 **Tipo de solución:** MVP académico Android  
-**Documento base:** Caso oficial DSY1105
+**Documento base:** Caso oficial DSY1105  
+**Estado:** Documento vivo y fuente oficial del proyecto
 
 ---
 
 # 1. Propósito
 
-Este documento reúne los requerimientos funcionales y no funcionales del sistema y los relaciona con el estado real de implementación del proyecto.
+Este documento es la **fuente oficial de verdad del proyecto** dentro del repositorio GitHub.
 
-Se distinguen tres tipos de origen:
+Reúne los requerimientos funcionales y no funcionales del sistema, las decisiones relevantes de alcance y el estado real de implementación.
+
+Cuando un cambio afecte alguno de estos elementos, este archivo debe actualizarse junto con el desarrollo:
+
+- alcance del MVP,
+- requerimientos funcionales,
+- requerimientos no funcionales,
+- arquitectura,
+- tecnologías,
+- modelos de datos,
+- pantallas y navegación,
+- API,
+- persistencia,
+- integraciones,
+- pruebas,
+- decisiones técnicas importantes,
+- estado de implementación.
+
+Los documentos ubicados en la carpeta `docs/` son complementarios. Si existiera una contradicción entre un documento complementario y este archivo, se debe revisar y corregir la inconsistencia para que `DOCUMENTACION.md` represente el estado vigente del proyecto.
+
+GitHub es el lugar oficial donde se mantiene esta documentación versionada. Herramientas de comunicación como Discord pueden utilizarse para coordinación, avisos o conversación del equipo, pero no reemplazan la documentación del repositorio.
+
+## 1.1 Regla de actualización
+
+El flujo de trabajo será:
+
+```text
+Cambio de código, alcance o decisión
+        ↓
+Revisar impacto documental
+        ↓
+Actualizar DOCUMENTACION.md si corresponde
+        ↓
+Pull Request
+        ↓
+Revisión
+        ↓
+develop
+```
+
+Una tarea que cambie de forma relevante el sistema no se considera completamente cerrada si la documentación correspondiente quedó desactualizada.
+
+## 1.2 Clasificación del origen
+
+Se distinguen los siguientes tipos de origen:
 
 - **Caso oficial:** aparece de forma explícita en el caso DSY1105.
 - **Derivado del caso:** se incorpora porque es necesario para implementar correctamente una tarea descrita en el caso.
-- **Pendiente de rúbrica:** el caso lo menciona, pero el nivel exacto de implementación debe confirmarse cuando esté disponible la rúbrica oficial.
+- **Rúbrica:** requisito o ajuste definido por la pauta oficial cuando esté disponible.
+- **Decisión técnica:** elección del equipo para implementar el sistema sin alterar el objetivo del caso.
 
 Los requerimientos describen el objetivo final del MVP. Que un requisito aparezca en este documento no significa necesariamente que ya esté implementado.
 
