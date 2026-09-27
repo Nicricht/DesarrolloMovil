@@ -34,9 +34,29 @@ Este repositorio contiene el caso académico de la asignatura DSY1105. El desaf�
 - Microservicios
 - Pruebas unitarias
 
-## Documentación del proyecto
+## 📘 Documentación maestra
 
-La planificación inicial está organizada en los siguientes documentos:
+La fuente principal de documentación viva del proyecto es:
+
+**[DOCUMENTACION_MAESTRA.md](./docs/DOCUMENTACION_MAESTRA.md)**
+
+Este documento se irá actualizando durante todo el desarrollo y consolida:
+
+- problema y objetivos,
+- alcance,
+- requisitos funcionales y no funcionales,
+- arquitectura,
+- modelo de datos,
+- API REST,
+- pantallas,
+- navegación,
+- backlog,
+- pruebas,
+- trazabilidad,
+- decisiones pendientes,
+- estado del proyecto.
+
+## Documentación técnica complementaria
 
 1. [Visión y alcance](./docs/00_VISION_Y_ALCANCE.md)
 2. [Arquitectura](./docs/01_ARQUITECTURA.md)
