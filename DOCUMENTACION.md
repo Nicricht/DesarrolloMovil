@@ -557,7 +557,7 @@ Cuando esté disponible, la rúbrica oficial tendrá prioridad para definir el a
 
 # 10. Plan acelerado de sprints hasta la entrega
 
-El plazo del proyecto se redujo a aproximadamente **una semana y media**. Por esta razón, la planificación anterior se reemplaza por un plan acelerado con trabajo paralelo y tareas pequeñas.
+El plazo del proyecto se redujo a aproximadamente **una semana y media**. La planificación se organiza con trabajo paralelo y tareas pequeñas.
 
 Mientras no exista una fecha oficial exacta, se utilizará como ventana interna tentativa el período **28 de septiembre al 7 de octubre de 2026**.
 
@@ -565,10 +565,9 @@ La prioridad es completar primero lo obligatorio del caso y evitar funcionalidad
 
 ## 10.0 Responsables asignados
 
-- **Nicolás Iván Vega Linero:** GitHub `@Nicricht`, Trello `@nicolasivanvegalinero`. Responsable principal del trabajo Android relacionado con Room, Retrofit y cambios de estado/notificaciones.
-- **Colaborador del repositorio:** responsable principal del backend Spring Boot, endpoints, pruebas de backend, evidencias, UI/UX y microservicio de notificaciones. El username exacto del colaborador no está disponible mediante el conector actual, por lo que Trello lo identifica temporalmente como **Colaborador**.
-- **Ambos:** integración, pruebas E2E, revisión de privacidad/seguridad, validación final, documentación de cierre y release.
-
+- **Nicolás Iván Vega Linero:** GitHub `@Nicricht`, Trello `@nicolasivanvegalinero`. Responsable principal de Room, Retrofit y cambios de estado/notificaciones.
+- **Colaborador del repositorio:** responsable principal de Spring Boot, endpoints, pruebas de backend, evidencias, UI/UX y microservicio de notificaciones.
+- **Ambos:** integración, pruebas E2E, privacidad/seguridad, validación final, documentación de cierre y release.
 
 ## Sprint 0 · Documentación inicial
 
@@ -588,166 +587,83 @@ Incluyó proyecto Android, Kotlin, Jetpack Compose, Material Design 3, estructur
 
 Incluyó consulta de `SIN-2026-001`, validación de identificador inexistente, detalle, seguimiento, historial, repositorio ficticio y ViewModel.
 
-## Sprint 3 · Backend + Room
+## Sprint 3 · Room + Backend + Retrofit + Integración + Evidencias
 
-**Ventana acelerada:** 28 al 30 de septiembre.  
+**Ventana:** 28 de septiembre al 4 de octubre de 2026.  
 **Estado:** Sprint actual.
 
-### Nicolás Iván Vega Linero · Persistencia Android
-
-Las tareas se dividen en:
-
-1. **A1 · Room: dependencias y entidades**
-   - configurar Room,
-   - crear `SiniestroEntity`,
-   - crear `GestionHistorialEntity`,
-   - definir relaciones,
-   - crear mappers dominio ↔ entidad.
-
-2. **A2 · Room: DAO y base de datos**
-   - crear DAO,
-   - crear base Room,
-   - consultas por identificador,
-   - inserción y actualización,
-   - historial ordenado.
-
-3. **A3 · Room: repositorio local y pruebas**
-   - integrar DAO con Repository,
-   - probar guardado y recuperación,
-   - mantener ViewModel desacoplado de Room.
-
-### Colaborador del repositorio · Backend
-
-Las tareas se dividen en:
-
-1. **B1 · Spring Boot base**
-   - crear proyecto,
-   - estructura controller/service/repository,
-   - configuración de datos ficticios o H2.
-
-2. **B2 · Endpoint de consulta**
-   - `GET /api/v1/siniestros/{id}`,
-   - caso válido,
-   - respuesta 404.
-
-3. **B3 · Endpoint de historial**
-   - `GET /api/v1/siniestros/{id}/historial`,
-   - historial ordenado,
-   - estados oficiales.
-
-4. **B4 · Pruebas unitarias y CI**
-   - consulta válida,
-   - identificador inexistente,
-   - historial,
-   - CI del backend.
-
-**Cierre del Sprint 3:** Room operativo, API operativa y pruebas principales en verde.
-
-## Sprint 4 · Retrofit + integración + evidencias
-
-**Ventana acelerada:** 1 al 4 de octubre.
+Este sprint corresponde a la **unión de los antiguos Sprint 3 y Sprint 4**.
 
 ### Nicolás Iván Vega Linero
 
-1. **A1 · Retrofit base**
-   - dependencia Retrofit,
-   - converter JSON,
-   - DTOs,
-   - `ApiService`,
-   - configuración de base URL.
-
-2. **A2 · Repository remoto + ViewModel**
-   - RemoteDataSource,
-   - mappers DTO → dominio,
-   - consumo de consulta e historial,
-   - loading y error.
+1. **A1 · Room: dependencias y entidades**
+2. **A2 · Room: DAO y base de datos**
+3. **A3 · Room: repositorio local y pruebas**
+4. **A4 · Retrofit: configuración, DTOs y ApiService**
+5. **A5 · Retrofit: repositorio remoto + ViewModel**
 
 ### Colaborador del repositorio
 
-1. **B1 · Selector de imagen y PDF**
-   - selección de imagen,
-   - selección de PDF,
-   - asociación al siniestro,
-   - confirmación visual.
+1. **B1 · Spring Boot base**
+2. **B2 · Endpoint de consulta**
+3. **B3 · Endpoint de historial**
+4. **B4 · Pruebas unitarias y CI**
+5. **B5 · Evidencia: selector de imagen y PDF**
+6. **B6 · Evidencia: cámara y permisos**
 
-2. **B2 · Cámara y permisos**
-   - captura de imagen,
-   - permisos mínimos,
-   - cancelación y errores.
+### Ambos
 
-### Equipo
+1. **I1 · Integrar estado e historial con backend**
+2. **I2 · Integrar Room + API**
+3. **I3 · Prueba E2E consulta → historial**
 
-1. **Integrar Room + API**
-   - API exitosa → guardar cache,
-   - error de red con cache → mostrar cache,
-   - sin API ni cache → error claro.
+### Criterio de cierre del Sprint 3
 
-2. **Prueba E2E consulta → historial**
-   - Android,
-   - Retrofit,
-   - Spring Boot,
-   - Repository,
-   - Room,
-   - ViewModel,
-   - Compose.
+El Sprint 3 se considera terminado cuando:
 
-**Cierre del Sprint 4:** consulta, detalle, seguimiento e historial funcionan de punta a punta y evidencia básica está disponible.
+- Room/SQLite funciona desde Repository,
+- Spring Boot y los endpoints REST funcionan,
+- Retrofit conecta Android con el backend,
+- consulta, detalle, estado e historial funcionan de punta a punta,
+- Room actúa como persistencia/cache simple,
+- evidencia básica con imagen/PDF/cámara está disponible,
+- pruebas principales pasan,
+- `DOCUMENTACION.md` coincide con lo implementado.
 
-## Sprint 5 · Notificaciones + calidad + pruebas
+**Fecha límite interna del Sprint 3: 4 de octubre de 2026.**
 
-**Ventana acelerada:** 5 y 6 de octubre.
+## Sprint 4 · Notificaciones + UI + calidad + pruebas
+
+**Ventana:** 5 y 6 de octubre de 2026.
 
 ### Nicolás Iván Vega Linero
 
-**A1 · Cambio de estado y notificación**
 - cambio simulado de estado,
-- creación de notificación,
+- generación de notificación,
 - actualización del seguimiento.
 
 ### Colaborador del repositorio
 
-1. **B1 · Estados de interfaz**
-   - loading,
-   - error,
-   - vacío,
-   - confirmaciones,
-   - consistencia Material Design 3.
+- estados loading/error/empty,
+- confirmaciones,
+- consistencia Material Design 3,
+- microservicio mínimo de notificaciones,
+- prueba unitaria básica del servicio.
 
-2. **B2 · Microservicio de notificaciones**
-   - responsabilidad separada para notificaciones,
-   - endpoint mínimo de consulta,
-   - aviso asociado a cambio simulado,
-   - prueba unitaria básica,
-   - solo datos ficticios.
+### Ambos
 
-### Equipo
-
-1. **Revisión de privacidad y seguridad**
-   - datos ficticios,
-   - sin credenciales,
-   - sin pólizas reales,
-   - sin datos médicos o financieros,
-   - sin secretos en UI o logs.
-
-2. **Pruebas finales Android + backend**
-   - consulta válida e inválida,
-   - detalle,
-   - estado,
-   - historial,
-   - Room,
-   - Retrofit,
-   - backend,
-   - evidencia,
-   - notificaciones,
-   - navegación.
+- revisión de privacidad y seguridad,
+- pruebas Android + backend,
+- verificación de datos ficticios,
+- corrección de errores críticos.
 
 ### Registro de siniestro
 
 El registro continúa como **tarea condicional**. Solo se implementará si la rúbrica confirma que debe desarrollarse además de la consulta.
 
-## Sprint 6 · Cierre
+## Sprint 5 · Cierre y entrega
 
-**Ventana acelerada:** 7 de octubre.
+**Ventana:** 7 de octubre de 2026.
 
 Responsabilidad compartida.
 
@@ -765,13 +681,11 @@ Tareas:
 
 ## 10.1 Regla para el plazo reducido
 
-Con este plazo no se espera que una persona termine un bloque completo antes de que la otra comience.
-
 El trabajo debe avanzar en paralelo:
 
 ```text
 Nicolás ───── Room ── Retrofit ── Notificaciones ──┐
-                                                  ├── Integración y entrega
+                                                   ├── Integración y entrega
 Colaborador ── Backend ── Evidencias ── UI/UX ─────┘
 ```
 
