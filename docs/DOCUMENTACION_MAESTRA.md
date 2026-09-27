@@ -791,14 +791,16 @@ La implementación de push real dependerá de la rúbrica y del tiempo disponibl
 - Cambio de estado.
 - Actualización del historial.
 
-## P2 · Mejora
+## P2 · Solo si la pauta o el tiempo lo justifican
 
-- Registro completo.
+- Registro más completo.
 - Push real.
 - Animaciones.
-- Mejor offline.
-- Mejor cobertura de errores.
-- Pulido visual.
+- Offline más elaborado.
+- Cobertura adicional de errores.
+- Pulido visual extra.
+
+Estas mejoras no son prioridad. Primero se debe completar lo exigido por la pauta y el flujo principal del caso.
 
 ---
 
@@ -968,21 +970,93 @@ Las siguientes decisiones todavía no deben considerarse definitivas:
 
 # 31. Regla de trabajo del proyecto
 
-No se debe desarrollar una función porque "parece buena".
+La idea es hacer **lo necesario para cumplir bien la pauta**, sin agregar funciones solo porque se ven interesantes.
 
-Toda función debe poder responder:
+Antes de desarrollar algo se debe poder responder:
 
-1. ¿Qué requisito cubre?
-2. ¿Qué problema del caso resuelve?
-3. ¿Qué pantalla la utiliza?
-4. ¿Qué endpoint necesita?
-5. ¿Qué datos consume?
-6. ¿Cómo se prueba?
-7. ¿Cómo se demostrará?
+1. ¿La pauta o el caso lo pide?
+2. ¿Qué requisito cubre?
+3. ¿Qué pantalla lo necesita?
+4. ¿Qué datos usa?
+5. ¿Cómo se va a probar?
+6. ¿Cómo se va a mostrar en la entrega?
+
+Si una función no aporta a la evaluación ni al flujo principal, queda fuera del MVP.
 
 ---
 
-# 32. Estado actual
+# 32. Metodología de trabajo con GitFlow
+
+Para ordenar el desarrollo se utilizará una versión simple de GitFlow.
+
+## Ramas principales
+
+### main
+
+Contiene únicamente versiones estables del proyecto.
+
+No se trabaja directamente sobre esta rama.
+
+### develop
+
+Es la rama donde se integran los cambios que ya fueron revisados antes de preparar una versión estable.
+
+## Ramas de trabajo
+
+### feature/*
+
+Se utilizan para desarrollar funcionalidades.
+
+Ejemplos:
+
+```text
+feature/consulta-siniestro
+feature/historial-siniestro
+feature/room
+feature/evidencias
+```
+
+### docs/*
+
+Se utilizan para cambios de documentación.
+
+Ejemplo:
+
+```text
+docs/arquitectura-diseno-inicial
+```
+
+### release/*
+
+Se utilizarán solamente cuando sea necesario preparar una entrega estable.
+
+### hotfix/*
+
+Se utilizarán solamente si aparece un error importante en una versión ya estable.
+
+## Flujo básico
+
+```text
+main
+ ↓
+develop
+ ↓
+feature/* o docs/*
+ ↓
+Pull Request
+ ↓
+develop
+ ↓
+release/* cuando corresponda
+ ↓
+main
+```
+
+La idea no es complicar GitFlow. Se usará para mantener ordenado el trabajo y evitar desarrollar directamente sobre `main`.
+
+---
+
+# 33. Estado actual
 
 ## Completado
 
@@ -1004,14 +1078,14 @@ Toda función debe poder responder:
 ## Pendiente crítico
 
 - Obtener y revisar la rúbrica oficial.
-- Confirmar criterios de evaluación.
-- Cerrar decisiones técnicas pendientes.
-- Diseñar prototipo visual definitivo.
-- Crear backlog detallado para implementación.
+- Comparar la rúbrica con esta documentación.
+- Quitar o simplificar cualquier elemento que no aporte puntaje ni sea necesario para el caso.
+- Cerrar solo las decisiones técnicas necesarias para comenzar.
+- Preparar el backlog mínimo de implementación.
 
 ---
 
-# 33. Documentos complementarios
+# 34. Documentos complementarios
 
 - [Caso DSY1105](../CASO_DSY1105_SEGUROS_BPO.md)
 - [Visión y alcance](./00_VISION_Y_ALCANCE.md)
@@ -1023,7 +1097,11 @@ Toda función debe poder responder:
 
 ---
 
-# 34. Historial de cambios
+# 35. Historial de cambios
+
+## v0.2
+
+Se agrega la forma de trabajo con GitFlow y se ajusta el alcance para priorizar solamente lo necesario para la pauta.
 
 ## v0.1
 
