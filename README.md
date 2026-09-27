@@ -64,6 +64,9 @@ Este documento se irá actualizando durante todo el desarrollo y consolida:
 4. [Modelo de datos](./docs/03_MODELO_DE_DATOS.md)
 5. [Contrato API REST](./docs/04_CONTRATO_API_REST.md)
 6. [Plan de implementación](./docs/05_PLAN_DE_IMPLEMENTACION.md)
+7. [Casos de uso](./docs/06_CASOS_DE_USO.md)
+8. [Decisiones técnicas](./docs/07_DECISIONES_TECNICAS.md)
+9. [Mockups funcionales](./docs/08_MOCKUPS_FUNCIONALES.md)
 
 ## Documento original del caso
 
