@@ -35,15 +35,20 @@ fun AppNavigation(
         composable(AppRoutes.CONSULTA) {
             ConsultaScreen(
                 idSiniestro = uiState.idSiniestro,
+                mensajeError = uiState.mensajeError,
                 onIdChange = mainViewModel::actualizarIdSiniestro,
-                onBuscar = { navController.navigate(AppRoutes.DETALLE) },
+                onBuscar = {
+                    if (mainViewModel.buscarSiniestro()) {
+                        navController.navigate(AppRoutes.DETALLE)
+                    }
+                },
                 onVolver = { navController.popBackStack() }
             )
         }
 
         composable(AppRoutes.DETALLE) {
             DetalleScreen(
-                idSiniestro = uiState.idSiniestro,
+                siniestro = uiState.siniestroEncontrado,
                 onSeguimiento = { navController.navigate(AppRoutes.SEGUIMIENTO) },
                 onHistorial = { navController.navigate(AppRoutes.HISTORIAL) },
                 onEvidencias = { navController.navigate(AppRoutes.EVIDENCIAS) },
@@ -53,12 +58,14 @@ fun AppNavigation(
 
         composable(AppRoutes.SEGUIMIENTO) {
             SeguimientoScreen(
+                estadoActual = uiState.siniestroEncontrado?.estado,
                 onVolver = { navController.popBackStack() }
             )
         }
 
         composable(AppRoutes.HISTORIAL) {
             HistorialScreen(
+                historial = uiState.historial,
                 onVolver = { navController.popBackStack() }
             )
         }
