@@ -1069,19 +1069,21 @@ La idea no es complicar GitFlow. Se usará para mantener ordenado el trabajo y e
 - API inicial.
 - Pantallas iniciales.
 - Plan de implementación inicial.
+- Casos de uso principales.
+- Decisiones técnicas provisionales.
+- Mockups funcionales iniciales.
 
 ## En progreso
 
-- Consolidación de documentación.
-- Revisión de decisiones arquitectónicas.
+- Ajustar la documentación a la futura rúbrica cuando esté disponible.
+- Preparar el backlog mínimo de implementación.
 
 ## Pendiente crítico
 
-- Obtener y revisar la rúbrica oficial.
+- Obtener y revisar la rúbrica oficial cuando esté disponible.
 - Comparar la rúbrica con esta documentación.
 - Quitar o simplificar cualquier elemento que no aporte puntaje ni sea necesario para el caso.
-- Cerrar solo las decisiones técnicas necesarias para comenzar.
-- Preparar el backlog mínimo de implementación.
+- Confirmar o cambiar las decisiones técnicas provisionales.
 
 ---
 
@@ -1094,10 +1096,17 @@ La idea no es complicar GitFlow. Se usará para mantener ordenado el trabajo y e
 - [Modelo de datos](./03_MODELO_DE_DATOS.md)
 - [Contrato API REST](./04_CONTRATO_API_REST.md)
 - [Plan de implementación](./05_PLAN_DE_IMPLEMENTACION.md)
+- [Casos de uso](./06_CASOS_DE_USO.md)
+- [Decisiones técnicas](./07_DECISIONES_TECNICAS.md)
+- [Mockups funcionales](./08_MOCKUPS_FUNCIONALES.md)
 
 ---
 
 # 35. Historial de cambios
+
+## v0.3
+
+Se agregan casos de uso, decisiones técnicas provisionales y mockups funcionales.
 
 ## v0.2
 
