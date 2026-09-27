@@ -551,3 +551,274 @@ Antes de incorporar una nueva funcionalidad se debe comprobar que:
 5. no agregue complejidad innecesaria.
 
 Cuando esté disponible, la rúbrica oficial tendrá prioridad para definir el alcance final del proyecto.
+
+
+---
+
+# 10. Plan de sprints hasta la entrega
+
+La planificación se organiza considerando una entrega estimada durante la semana del **20 de octubre de 2026**. Las fechas son ventanas de trabajo sugeridas y deberán ajustarse cuando exista una fecha oficial de entrega.
+
+La meta interna es llegar al **20 de octubre con el MVP terminado**, dejando la semana de entrega como margen para correcciones menores, revisión de la pauta y preparación final.
+
+## Sprint 0 · Documentación inicial
+
+**Estado:** Completado.
+
+Incluyó:
+
+- visión y alcance,
+- requerimientos,
+- arquitectura inicial,
+- modelo de datos,
+- contrato API inicial,
+- casos de uso,
+- decisiones técnicas,
+- mockups,
+- GitFlow,
+- documentación oficial en GitHub.
+
+## Sprint 1 · Base Android
+
+**Estado:** Completado.
+
+Incluyó:
+
+- proyecto Android,
+- Kotlin,
+- Jetpack Compose,
+- Material Design 3,
+- estructura MVVM,
+- navegación,
+- modelos principales del dominio.
+
+## Sprint 2 · Consulta y seguimiento local
+
+**Estado:** Completado.
+
+Incluyó:
+
+- consulta de `SIN-2026-001`,
+- validación de identificador inexistente,
+- detalle del siniestro,
+- estado y etapa,
+- historial,
+- repositorio ficticio local,
+- integración con ViewModel.
+
+## Sprint 3 · Backend, persistencia y diagramas
+
+**Ventana sugerida:** 28 de septiembre al 4 de octubre.  
+**Estado:** Sprint actual.
+
+### Persona A
+
+**Tarea:** Room/SQLite.
+
+Debe implementar:
+
+- dependencias Room,
+- entidades locales para siniestro e historial,
+- DAO,
+- base de datos,
+- repositorio local,
+- integración con ViewModel sin acceso directo desde la UI.
+
+### Persona B
+
+**Tarea:** Spring Boot + API REST.
+
+Debe implementar:
+
+- proyecto Spring Boot,
+- modelo y DTO de siniestro,
+- `GET /api/v1/siniestros/{id}`,
+- `GET /api/v1/siniestros/{id}/historial`,
+- datos ficticios,
+- manejo de identificador inexistente,
+- pruebas unitarias principales.
+
+### Equipo
+
+Completar los diagramas mínimos necesarios:
+
+- casos de uso,
+- arquitectura general,
+- modelo de datos,
+- secuencia del flujo de consulta.
+
+**Cierre del sprint:** Room funcionando, API funcionando, pruebas de backend pasando y documentación coherente.
+
+## Sprint 4 · Integración remota y evidencias
+
+**Ventana sugerida:** 5 al 11 de octubre.
+
+### Persona A
+
+**Tarea:** Retrofit e integración Android ↔ API.
+
+Debe implementar:
+
+- configuración Retrofit,
+- DTOs,
+- servicio API,
+- mappers,
+- repositorio remoto,
+- integración con ViewModel,
+- manejo básico de errores de red.
+
+### Persona B
+
+**Tarea:** Evidencias.
+
+Debe implementar:
+
+- selección de imagen,
+- selección de PDF,
+- uso de cámara cuando corresponda,
+- asociación de evidencia al siniestro,
+- permisos Android necesarios,
+- confirmación de la acción.
+
+### Equipo
+
+Integrar:
+
+```text
+Consulta
+  ↓
+API REST
+  ↓
+Detalle
+  ↓
+Seguimiento
+  ↓
+Historial
+```
+
+**Cierre del sprint:** la consulta, el detalle, el estado y el historial funcionan contra Spring Boot.
+
+## Sprint 5 · Notificaciones, calidad y pruebas
+
+**Ventana sugerida:** 12 al 17 de octubre.
+
+### Persona A
+
+**Tarea:** Notificaciones y cambios de estado.
+
+Debe implementar:
+
+- cambio de estado simulado,
+- notificación asociada,
+- listado de notificaciones,
+- navegación al siniestro relacionado,
+- actualización del seguimiento.
+
+### Persona B
+
+**Tarea:** UI/UX y privacidad.
+
+Debe revisar:
+
+- jerarquía visual,
+- textos,
+- estados loading/success/empty/error,
+- consistencia Material Design 3,
+- accesibilidad básica,
+- privacidad,
+- uso exclusivo de datos ficticios.
+
+### Equipo
+
+Realizar pruebas de:
+
+- ViewModel y repositorios,
+- consulta válida e inválida,
+- Retrofit ↔ API,
+- Room ↔ Repository,
+- navegación principal,
+- flujo integrado.
+
+### Registro de siniestro
+
+El registro queda como **tarea condicional**. Solo se implementará en este sprint si la rúbrica confirma que es necesario desarrollar además de la consulta.
+
+**Cierre del sprint:** funciones principales completas y errores críticos identificados.
+
+## Sprint 6 · Cierre, validación y entrega
+
+**Ventana sugerida:** 18 y 19 de octubre.
+
+Responsabilidad compartida.
+
+Tareas:
+
+- probar el happy path completo,
+- corregir errores críticos,
+- actualizar `DOCUMENTACION.md`,
+- revisar requisitos y diagramas,
+- preparar recorrido de demostración,
+- revisar README y enlaces,
+- verificar CI,
+- preparar release estable,
+- integrar a `main` únicamente cuando `develop` esté validado.
+
+El recorrido final esperado es:
+
+```text
+Abrir app
+  ↓
+Consultar siniestro
+  ↓
+Obtener información desde Spring Boot
+  ↓
+Ver detalle y estado
+  ↓
+Ver historial
+  ↓
+Adjuntar evidencia
+  ↓
+Simular cambio de estado
+  ↓
+Recibir notificación
+  ↓
+Ver estado actualizado
+```
+
+## 10.1 Regla para trabajo en pareja
+
+Cada tarea técnica debe definir:
+
+- sprint,
+- responsable,
+- rama Git,
+- objetivo,
+- subtareas,
+- criterios de aceptación,
+- dependencias,
+- pruebas necesarias,
+- impacto en `DOCUMENTACION.md`.
+
+Las personas deben trabajar en ramas distintas siempre que sea posible para evitar modificar los mismos archivos al mismo tiempo.
+
+El flujo esperado es:
+
+```text
+Tarea Trello
+   ↓
+feature/* o docs/*
+   ↓
+Desarrollo
+   ↓
+Pruebas
+   ↓
+Actualizar documentación si corresponde
+   ↓
+Pull Request
+   ↓
+Revisión
+   ↓
+develop
+```
+
+No se trabaja directamente sobre `main`.
