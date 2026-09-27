@@ -563,6 +563,13 @@ Mientras no exista una fecha oficial exacta, se utilizará como ventana interna 
 
 La prioridad es completar primero lo obligatorio del caso y evitar funcionalidades que no aporten al MVP o a la rúbrica.
 
+## 10.0 Responsables asignados
+
+- **Nicolás Iván Vega Linero:** GitHub `@Nicricht`, Trello `@nicolasivanvegalinero`. Responsable principal del trabajo Android relacionado con Room, Retrofit y cambios de estado/notificaciones.
+- **Colaborador del repositorio:** responsable principal del backend Spring Boot, endpoints, pruebas de backend, evidencias, UI/UX y microservicio de notificaciones. El username exacto del colaborador no está disponible mediante el conector actual, por lo que Trello lo identifica temporalmente como **Colaborador**.
+- **Ambos:** integración, pruebas E2E, revisión de privacidad/seguridad, validación final, documentación de cierre y release.
+
+
 ## Sprint 0 · Documentación inicial
 
 **Estado:** Completado.
@@ -586,7 +593,7 @@ Incluyó consulta de `SIN-2026-001`, validación de identificador inexistente, d
 **Ventana acelerada:** 28 al 30 de septiembre.  
 **Estado:** Sprint actual.
 
-### Persona A · Persistencia Android
+### Nicolás Iván Vega Linero · Persistencia Android
 
 Las tareas se dividen en:
 
@@ -609,7 +616,7 @@ Las tareas se dividen en:
    - probar guardado y recuperación,
    - mantener ViewModel desacoplado de Room.
 
-### Persona B · Backend
+### Colaborador del repositorio · Backend
 
 Las tareas se dividen en:
 
@@ -640,7 +647,7 @@ Las tareas se dividen en:
 
 **Ventana acelerada:** 1 al 4 de octubre.
 
-### Persona A
+### Nicolás Iván Vega Linero
 
 1. **A1 · Retrofit base**
    - dependencia Retrofit,
@@ -655,7 +662,7 @@ Las tareas se dividen en:
    - consumo de consulta e historial,
    - loading y error.
 
-### Persona B
+### Colaborador del repositorio
 
 1. **B1 · Selector de imagen y PDF**
    - selección de imagen,
@@ -690,14 +697,14 @@ Las tareas se dividen en:
 
 **Ventana acelerada:** 5 y 6 de octubre.
 
-### Persona A
+### Nicolás Iván Vega Linero
 
 **A1 · Cambio de estado y notificación**
 - cambio simulado de estado,
 - creación de notificación,
 - actualización del seguimiento.
 
-### Persona B
+### Colaborador del repositorio
 
 1. **B1 · Estados de interfaz**
    - loading,
@@ -763,9 +770,9 @@ Con este plazo no se espera que una persona termine un bloque completo antes de 
 El trabajo debe avanzar en paralelo:
 
 ```text
-Persona A ── Room ── Retrofit ── Notificaciones ──┐
+Nicolás ───── Room ── Retrofit ── Notificaciones ──┐
                                                   ├── Integración y entrega
-Persona B ── Backend ── Evidencias ── UI/UX ─────┘
+Colaborador ── Backend ── Evidencias ── UI/UX ─────┘
 ```
 
 Cada tarea debe ser suficientemente pequeña para poder completarse, probarse y fusionarse rápidamente.
