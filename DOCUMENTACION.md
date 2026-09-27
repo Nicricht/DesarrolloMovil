@@ -699,12 +699,19 @@ Las tareas se dividen en:
 
 ### Persona B
 
-**B1 · Estados de interfaz**
-- loading,
-- error,
-- vacío,
-- confirmaciones,
-- consistencia Material Design 3.
+1. **B1 · Estados de interfaz**
+   - loading,
+   - error,
+   - vacío,
+   - confirmaciones,
+   - consistencia Material Design 3.
+
+2. **B2 · Microservicio de notificaciones**
+   - responsabilidad separada para notificaciones,
+   - endpoint mínimo de consulta,
+   - aviso asociado a cambio simulado,
+   - prueba unitaria básica,
+   - solo datos ficticios.
 
 ### Equipo
 
