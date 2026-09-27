@@ -822,3 +822,194 @@ develop
 ```
 
 No se trabaja directamente sobre `main`.
+
+
+---
+
+# 11. Diagramas esenciales
+
+Estos diagramas representan el alcance funcional y la arquitectura objetivo del MVP. Los componentes marcados como pendientes forman parte de los siguientes sprints y no deben interpretarse como ya implementados.
+
+## 11.1 Diagrama de casos de uso
+
+El actor principal del MVP móvil es el **cliente o asegurado**. El colaborador o liquidador y el equipo de administración forman parte del contexto del proceso, pero no requieren una aplicación administrativa completa dentro del alcance actual.
+
+```mermaid
+flowchart LR
+    CLIENTE[Cliente / Asegurado]
+
+    subgraph APP["MVP móvil de seguimiento de siniestros"]
+        UC1((Consultar siniestro))
+        UC2((Visualizar detalle))
+        UC3((Ver estado y etapa))
+        UC4((Consultar historial))
+        UC5((Adjuntar evidencia))
+        UC6((Consultar evidencias))
+        UC7((Recibir notificaciones))
+        UC8((Registrar siniestro))
+    end
+
+    CLIENTE --> UC1
+    CLIENTE --> UC2
+    CLIENTE --> UC3
+    CLIENTE --> UC4
+    CLIENTE --> UC5
+    CLIENTE --> UC6
+    CLIENTE --> UC7
+    CLIENTE -. alcance por confirmar con rúbrica .-> UC8
+
+    UC1 --> UC2
+    UC2 --> UC3
+    UC2 --> UC4
+    UC2 --> UC5
+```
+
+**Estado actual:** consulta, detalle, estado e historial ya existen con datos ficticios locales. Evidencias y notificaciones están pendientes. El registro queda sujeto a la revisión de la rúbrica.
+
+## 11.2 Diagrama de arquitectura general
+
+La arquitectura objetivo respeta las tecnologías exigidas por el caso: Android con Kotlin, Compose, Material 3 y MVVM; persistencia local con Room/SQLite; integración mediante Retrofit; y backend con Spring Boot, API REST y microservicios.
+
+```mermaid
+flowchart TB
+    USER[Cliente]
+
+    subgraph ANDROID["Aplicación Android"]
+        UI[Jetpack Compose + Material 3]
+        VM[ViewModel]
+        REPO[Repository]
+        ROOM[(Room / SQLite)]
+        RETROFIT[Retrofit]
+    end
+
+    subgraph BACKEND["Backend académico"]
+        API[API REST]
+        SIN[Microservicio de siniestros]
+        NOTIF[Microservicio de notificaciones]
+        DATA[(Datos ficticios)]
+    end
+
+    USER --> UI
+    UI --> VM
+    VM --> REPO
+    REPO --> ROOM
+    REPO --> RETROFIT
+    RETROFIT --> API
+    API --> SIN
+    API --> NOTIF
+    SIN --> DATA
+    NOTIF --> DATA
+```
+
+**Estado actual de la arquitectura:**
+
+- **Implementado:** UI Compose, Material 3, ViewModel, Repository y modelos de dominio.
+- **Sprint 3:** Room/SQLite y backend Spring Boot/API REST.
+- **Sprint 4:** Retrofit e integración remota.
+- **Sprint 5:** notificaciones y actualización de estado.
+
+## 11.3 Diagrama del modelo de datos
+
+El modelo se mantiene limitado a la información necesaria para el caso académico y utiliza únicamente información ficticia.
+
+```mermaid
+erDiagram
+    SINIESTRO ||--o{ GESTION_HISTORIAL : tiene
+    SINIESTRO ||--o{ EVIDENCIA : contiene
+    SINIESTRO ||--o{ NOTIFICACION : genera
+
+    SINIESTRO {
+        string id PK
+        string tipo
+        string fechaOcurrencia
+        string fechaReporte
+        string estado
+        string equipoAsignado
+        string ultimaActualizacion
+    }
+
+    GESTION_HISTORIAL {
+        string id PK
+        string siniestroId FK
+        string fechaHora
+        string descripcion
+        string estadoResultante
+    }
+
+    EVIDENCIA {
+        string id PK
+        string siniestroId FK
+        string nombreArchivo
+        string tipoMime
+        string uriLocal
+        string urlRemota
+        string fechaCarga
+        string estadoCarga
+    }
+
+    NOTIFICACION {
+        string id PK
+        string siniestroId FK
+        string titulo
+        string mensaje
+        string fechaHora
+        boolean leida
+    }
+```
+
+Los valores permitidos para el estado del siniestro son:
+
+```text
+RECIBIDO
+EN_EVALUACION
+EN_LIQUIDACION
+CERRADO
+```
+
+## 11.4 Diagrama de secuencia de consulta
+
+El siguiente diagrama muestra el flujo objetivo cuando Android ya esté conectado al backend. Actualmente la aplicación llega hasta el repositorio ficticio local. Room, Retrofit y Spring Boot se incorporan en Sprint 3 y Sprint 4.
+
+```mermaid
+sequenceDiagram
+    actor Cliente
+    participant UI as Compose UI
+    participant VM as ViewModel
+    participant Repo as Repository
+    participant Api as Retrofit
+    participant REST as API REST
+    participant Backend as Spring Boot
+    participant Room as Room/SQLite
+
+    Cliente->>UI: Ingresa ID de siniestro
+    UI->>VM: Buscar siniestro
+    VM->>Repo: buscarPorId(id)
+    Repo->>Api: GET /api/v1/siniestros/{id}
+    Api->>REST: Solicitud HTTP
+    REST->>Backend: Consultar siniestro ficticio
+    Backend-->>REST: Siniestro + estado
+    REST-->>Api: JSON
+    Api-->>Repo: DTO
+    Repo->>Room: Guardar/actualizar cache
+    Repo-->>VM: Modelo de dominio
+    VM-->>UI: Estado de pantalla
+    UI-->>Cliente: Detalle y estado
+
+    Cliente->>UI: Abre historial
+    UI->>VM: Solicitar historial
+    VM->>Repo: obtenerHistorial(id)
+    Repo->>Api: GET /api/v1/siniestros/{id}/historial
+    Api->>REST: Solicitud HTTP
+    REST->>Backend: Consultar gestiones
+    Backend-->>REST: Historial ficticio
+    REST-->>Api: JSON
+    Api-->>Repo: Lista de gestiones
+    Repo->>Room: Guardar/actualizar historial
+    Repo-->>VM: Historial
+    VM-->>UI: Historial visible
+    UI-->>Cliente: Gestiones del caso
+```
+
+## 11.5 Regla de mantenimiento de diagramas
+
+Los diagramas forman parte de la documentación viva. Si cambia la arquitectura, el modelo de datos, los actores, el flujo de consulta o las responsabilidades de los componentes, estos diagramas deben actualizarse en el mismo ciclo de trabajo.
