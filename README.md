@@ -21,6 +21,14 @@ Desde el **2 de octubre de 2026**, el desarrollo parte desde el proyecto Android
 
 Las funcionalidades se implementan desde esta base siguiendo las tareas y responsables definidos en Trello.
 
+## Referencia de clase del profesor
+
+Se conserva una copia limpia del proyecto Android **Miregistro** utilizado como referencia durante las clases:
+
+**[referencias/profesor/Miregistro](./referencias/profesor/Miregistro/README.md)**
+
+Esta referencia sirve para observar patrones de organización, recursos, temas, estilos y componentes reutilizables en Jetpack Compose. No reemplaza la pauta, el caso oficial ni `DOCUMENTACION.md`, y no forma parte de la compilación de la aplicación principal.
+
 ## 📘 Documentación oficial del proyecto
 
 La fuente oficial y actualizada del proyecto es:
