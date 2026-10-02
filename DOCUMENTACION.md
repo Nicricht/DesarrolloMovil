@@ -611,11 +611,14 @@ Este sprint corresponde a la **unión de los antiguos Sprint 3 y Sprint 4**.
 
 ### Nicolás Iván Vega Linero
 
-1. **A1 · Room: dependencias y entidades**
-2. **A2 · Room: DAO y base de datos**
-3. **A3 · Room: repositorio local y pruebas**
-4. **A4 · Retrofit: configuración, DTOs y ApiService**
-5. **A5 · Retrofit: repositorio remoto + ViewModel**
+1. **A0.1 · Estructura MVVM y modelos de dominio**
+2. **A0.2 · Navegación y pantallas base**
+3. **A0.3 · Sistema visual reutilizable Compose**
+4. **A1 · Room: dependencias y entidades**
+5. **A2 · Room: DAO y base de datos**
+6. **A3 · Room: repositorio local y pruebas**
+7. **A4 · Retrofit: configuración, DTOs y ApiService**
+8. **A5 · Retrofit: repositorio remoto + ViewModel**
 
 ### Colaborador del repositorio
 
@@ -636,6 +639,8 @@ Este sprint corresponde a la **unión de los antiguos Sprint 3 y Sprint 4**.
 
 El Sprint 3 se considera terminado cuando:
 
+- la nueva base cuenta con estructura MVVM, modelos, navegación y pantallas base,
+- existe un sistema visual Compose reutilizable coherente con el trabajo desarrollado en clases,
 - Room/SQLite funciona desde Repository,
 - Spring Boot y los endpoints REST funcionan,
 - Retrofit conecta Android con el backend,
