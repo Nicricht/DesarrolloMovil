@@ -2,34 +2,38 @@ package com.example.seguimientosiniestros.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import com.example.seguimientosiniestros.domain.model.EstadoSiniestro
+import com.example.seguimientosiniestros.ui.components.EstadoSiniestroChip
+import com.example.seguimientosiniestros.ui.components.PantallaBase
+import com.example.seguimientosiniestros.ui.theme.Dimens
 
 @Composable
 fun SeguimientoScreen(
     siniestroId: String,
     onVolver: () -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+    PantallaBase(
+        titulo = "Seguimiento",
+        subtitulo = siniestroId,
+        onVolver = onVolver
     ) {
-        Button(onClick = onVolver) {
-            Text(text = "Volver")
+        Text(
+            text = "Etapas del proceso",
+            style = MaterialTheme.typography.titleMedium
+        )
+
+        Column(verticalArrangement = Arrangement.spacedBy(Dimens.espacioSm)) {
+            EstadoSiniestro.entries.forEach { estado ->
+                EstadoSiniestroChip(estado = estado)
+            }
         }
 
-        Text(text = "Seguimiento")
-        Text(text = siniestroId)
-        Text(text = "Recibido")
-        Text(text = "En evaluación")
-        Text(text = "En liquidación")
-        Text(text = "Cerrado")
+        Text(
+            text = "El estado actual se destacará cuando la pantalla reciba los datos del siniestro.",
+            style = MaterialTheme.typography.bodyMedium
+        )
     }
 }

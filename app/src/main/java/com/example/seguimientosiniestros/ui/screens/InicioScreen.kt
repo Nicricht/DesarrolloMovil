@@ -1,37 +1,32 @@
 package com.example.seguimientosiniestros.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import com.example.seguimientosiniestros.ui.components.BotonPrincipal
+import com.example.seguimientosiniestros.ui.components.PantallaBase
+import com.example.seguimientosiniestros.ui.components.TarjetaInformativa
 
 @Composable
 fun InicioScreen(
     onConsultar: () -> Unit,
     onNotificaciones: () -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+    PantallaBase(
+        titulo = "Seguimiento de Siniestros",
+        subtitulo = "Consulta el estado de tu siniestro de forma simple y clara."
     ) {
-        Text(text = "Seguimiento de Siniestros")
-        Text(text = "Consulta el estado de tus siniestros de forma simple.")
+        TarjetaInformativa(
+            titulo = "¿Qué puedes hacer?",
+            descripcion = "Consultar un siniestro, revisar su seguimiento e historial y acceder a sus evidencias."
+        )
 
-        Button(onClick = onConsultar) {
-            Text(text = "Consultar siniestro")
-        }
+        BotonPrincipal(
+            texto = "Consultar siniestro",
+            onClick = onConsultar
+        )
 
-        Button(onClick = onNotificaciones) {
-            Text(text = "Notificaciones")
-        }
+        BotonPrincipal(
+            texto = "Ver notificaciones",
+            onClick = onNotificaciones
+        )
     }
 }

@@ -1,14 +1,11 @@
 package com.example.seguimientosiniestros.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import com.example.seguimientosiniestros.ui.components.BotonPrincipal
+import com.example.seguimientosiniestros.ui.components.PantallaBase
+import com.example.seguimientosiniestros.ui.components.TarjetaInformativa
 
 @Composable
 fun DetalleScreen(
@@ -18,29 +15,23 @@ fun DetalleScreen(
     onHistorial: () -> Unit,
     onEvidencias: () -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+    PantallaBase(
+        titulo = "Detalle del siniestro",
+        subtitulo = "Resumen del caso consultado.",
+        onVolver = onVolver
     ) {
-        Button(onClick = onVolver) {
-            Text(text = "Volver")
-        }
+        Text(
+            text = siniestroId,
+            style = MaterialTheme.typography.titleLarge
+        )
 
-        Text(text = "Detalle del siniestro")
-        Text(text = siniestroId)
+        TarjetaInformativa(
+            titulo = "Información del caso",
+            descripcion = "Los datos del siniestro aparecerán aquí cuando la consulta se conecte al repositorio."
+        )
 
-        Button(onClick = onSeguimiento) {
-            Text(text = "Ver seguimiento")
-        }
-
-        Button(onClick = onHistorial) {
-            Text(text = "Ver historial")
-        }
-
-        Button(onClick = onEvidencias) {
-            Text(text = "Ver evidencias")
-        }
+        BotonPrincipal("Ver seguimiento", onSeguimiento)
+        BotonPrincipal("Ver historial", onHistorial)
+        BotonPrincipal("Ver evidencias", onEvidencias)
     }
 }
