@@ -8,6 +8,19 @@ Organización: **Servicios Corporativos Andes SpA**
 
 Este repositorio contiene el desarrollo académico de la asignatura DSY1105. El desafío consiste en construir un MVP móvil para que clientes de servicios BPO asociados al rubro asegurador puedan consultar y hacer seguimiento del estado de sus siniestros.
 
+## Base actual de desarrollo
+
+Desde el **2 de octubre de 2026**, el desarrollo parte desde el proyecto Android Studio `SeguimientoSiniestros`:
+
+- package: `com.example.seguimientosiniestros`
+- Minimum SDK: API 24
+- Jetpack Compose
+- Material Design 3
+- Kotlin DSL
+- Empty Activity como punto de partida
+
+Las funcionalidades se implementan desde esta base siguiendo las tareas y responsables definidos en Trello.
+
 ## 📘 Documentación oficial del proyecto
 
 La fuente oficial y actualizada del proyecto es:
