@@ -308,9 +308,11 @@ La interfaz debe utilizar Material Design 3.
 ## RNF-06. Arquitectura MVVM
 
 **Origen:** Caso oficial  
-**Estado actual:** Pendiente de reimplementación sobre la nueva base canónica.
+**Estado actual:** En implementación sobre la nueva base canónica.
 
 La aplicación debe utilizar arquitectura MVVM para mantener separadas la interfaz, el estado y la lógica de presentación.
+
+La estructura base ya incorpora modelos de dominio, contrato de Repository, `MainViewModel` y `MainUiState`. La conexión efectiva de las pantallas con el ViewModel se completará en las tareas siguientes del Sprint 3.
 
 ---
 
@@ -508,17 +510,21 @@ Actualmente el repositorio contiene la nueva base canónica Android Studio:
 - `MainActivity` generada como Empty Activity,
 - Gradle Wrapper,
 - pruebas de ejemplo generadas por Android Studio,
-- CI preparado para compilar el APK y ejecutar pruebas unitarias.
+- CI preparado para compilar el APK y ejecutar pruebas unitarias,
+- modelos de dominio `Siniestro`, `GestionHistorial`, `Evidencia` y `Notificacion`,
+- enum `EstadoSiniestro` con los cuatro estados definidos por el caso,
+- contrato `SiniestroRepository`,
+- `MainUiState` y `MainViewModel` como base de presentación MVVM,
+- prueba unitaria que verifica los estados oficiales del siniestro.
 
-La pantalla actual corresponde al estado inicial del proyecto y todavía no implementa el flujo funcional del siniestro.
+La pantalla actual continúa siendo la Empty Activity inicial. La estructura MVVM ya existe, pero todavía no está conectada a pantallas funcionales.
 
 ## 6.2 Pendiente de reimplementación y desarrollo
 
 A partir de esta base falta implementar:
 
-- estructura MVVM,
+- conectar las pantallas con el ViewModel y el Repository,
 - navegación,
-- modelos principales del dominio,
 - consulta de siniestro,
 - detalle del siniestro,
 - seguimiento y estados,
@@ -625,7 +631,7 @@ Este sprint corresponde a la **unión de los antiguos Sprint 3 y Sprint 4**.
 
 ### Nicolás Iván Vega Linero
 
-1. **A0.1 · Estructura MVVM y modelos de dominio**
+1. **A0.1 · Estructura MVVM y modelos de dominio** ✅
 2. **A0.2 · Navegación y pantallas base**
 3. **A0.3 · Sistema visual reutilizable Compose**
 4. **A1 · Room: dependencias y entidades**
