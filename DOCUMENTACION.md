@@ -88,6 +88,20 @@ La base parte desde una **Empty Activity** y será desarrollada desde este punto
 
 Las implementaciones funcionales anteriores permanecen disponibles en el historial Git, pero **ya no representan el estado actual del código**. Las funcionalidades de consulta, detalle, seguimiento, historial, MVVM, navegación y modelos deberán reimplementarse sobre esta base cuando corresponda según el sprint.
 
+## 1.4 Referencia de trabajo utilizada en clases
+
+El repositorio conserva el proyecto **Miregistro** como referencia académica en `referencias/profesor/Miregistro/`.
+
+Esta referencia se utilizará para observar la forma de organización mostrada en clases, especialmente:
+
+- separación de `ui/theme`, `ui/styles` y `ui/components`,
+- dimensiones y estilos reutilizables,
+- recursos gráficos y strings,
+- uso de Jetpack Compose y Material Design 3,
+- estructura general de un proyecto Android Studio.
+
+La referencia **no define requerimientos funcionales del proyecto de siniestros**. Ante cualquier diferencia, la prioridad continúa siendo: pauta/rúbrica oficial, caso DSY1105 y esta documentación vigente.
+
 ---
 
 # 2. Descripción general
