@@ -517,9 +517,12 @@ Actualmente el repositorio contiene la nueva base canónica Android Studio:
 - `MainUiState` y `MainViewModel` como base de presentación MVVM,
 - navegación Compose con rutas para Inicio, Consulta, Detalle, Seguimiento, Historial, Evidencias y Notificaciones,
 - pantallas base navegables para el happy path,
-- pruebas unitarias de estados oficiales y construcción de rutas.
+- sistema visual Compose reutilizable con `Dimens`, estilos de botones, campos y tarjetas,
+- componentes compartidos `PantallaBase`, `BotonPrincipal`, `TarjetaInformativa` y `EstadoSiniestroChip`,
+- tema visual propio aplicado a las pantallas base,
+- pruebas unitarias de estados oficiales, construcción de rutas y orden de etapas.
 
-La aplicación ya inicia en una navegación Compose básica. Existen las pantallas Inicio, Consulta, Detalle, Seguimiento, Historial, Evidencias y Notificaciones. Por ahora son superficies base: todavía no consumen datos reales ni están conectadas al Repository.
+La aplicación ya inicia en una navegación Compose básica y las pantallas Inicio, Consulta, Detalle, Seguimiento, Historial, Evidencias y Notificaciones comparten un sistema visual reutilizable. Todavía no consumen datos reales ni están conectadas al Repository.
 
 ## 6.2 Pendiente de reimplementación y desarrollo
 
@@ -634,7 +637,7 @@ Este sprint corresponde a la **unión de los antiguos Sprint 3 y Sprint 4**.
 
 1. **A0.1 · Estructura MVVM y modelos de dominio** ✅
 2. **A0.2 · Navegación y pantallas base** ✅
-3. **A0.3 · Sistema visual reutilizable Compose**
+3. **A0.3 · Sistema visual reutilizable Compose** ✅
 4. **A1 · Room: dependencias y entidades**
 5. **A2 · Room: DAO y base de datos**
 6. **A3 · Room: repositorio local y pruebas**
