@@ -515,16 +515,17 @@ Actualmente el repositorio contiene la nueva base canónica Android Studio:
 - enum `EstadoSiniestro` con los cuatro estados definidos por el caso,
 - contrato `SiniestroRepository`,
 - `MainUiState` y `MainViewModel` como base de presentación MVVM,
-- prueba unitaria que verifica los estados oficiales del siniestro.
+- navegación Compose con rutas para Inicio, Consulta, Detalle, Seguimiento, Historial, Evidencias y Notificaciones,
+- pantallas base navegables para el happy path,
+- pruebas unitarias de estados oficiales y construcción de rutas.
 
-La pantalla actual continúa siendo la Empty Activity inicial. La estructura MVVM ya existe, pero todavía no está conectada a pantallas funcionales.
+La aplicación ya inicia en una navegación Compose básica. Existen las pantallas Inicio, Consulta, Detalle, Seguimiento, Historial, Evidencias y Notificaciones. Por ahora son superficies base: todavía no consumen datos reales ni están conectadas al Repository.
 
 ## 6.2 Pendiente de reimplementación y desarrollo
 
 A partir de esta base falta implementar:
 
 - conectar las pantallas con el ViewModel y el Repository,
-- navegación,
 - consulta de siniestro,
 - detalle del siniestro,
 - seguimiento y estados,
@@ -632,7 +633,7 @@ Este sprint corresponde a la **unión de los antiguos Sprint 3 y Sprint 4**.
 ### Nicolás Iván Vega Linero
 
 1. **A0.1 · Estructura MVVM y modelos de dominio** ✅
-2. **A0.2 · Navegación y pantallas base**
+2. **A0.2 · Navegación y pantallas base** ✅
 3. **A0.3 · Sistema visual reutilizable Compose**
 4. **A1 · Room: dependencias y entidades**
 5. **A2 · Room: DAO y base de datos**
