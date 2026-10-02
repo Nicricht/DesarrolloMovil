@@ -68,6 +68,26 @@ Se distinguen los siguientes tipos de origen:
 
 Los requerimientos describen el objetivo final del MVP. Que un requisito aparezca en este documento no significa necesariamente que ya esté implementado.
 
+## 1.3 Base canónica actual
+
+Desde el **2 de octubre de 2026**, la base oficial de desarrollo es el proyecto Android Studio **SeguimientoSiniestros** entregado por el equipo y subido al repositorio.
+
+Configuración base:
+
+- nombre del proyecto: `SeguimientoSiniestros`,
+- package/applicationId: `com.example.seguimientosiniestros`,
+- Minimum SDK: API 24,
+- Target SDK: 36,
+- Jetpack Compose,
+- Material Design 3,
+- Kotlin,
+- Kotlin DSL,
+- Gradle Wrapper 9.4.1.
+
+La base parte desde una **Empty Activity** y será desarrollada desde este punto siguiendo las tareas vigentes en Trello.
+
+Las implementaciones funcionales anteriores permanecen disponibles en el historial Git, pero **ya no representan el estado actual del código**. Las funcionalidades de consulta, detalle, seguimiento, historial, MVVM, navegación y modelos deberán reimplementarse sobre esta base cuando corresponda según el sprint.
+
 ---
 
 # 2. Descripción general
@@ -87,7 +107,7 @@ Los requerimientos funcionales representan acciones o comportamientos que el sis
 ## RF-01. Consultar un siniestro
 
 **Origen:** Caso oficial  
-**Estado actual:** Implementado con datos ficticios locales.
+**Estado actual:** Pendiente de reimplementación sobre la nueva base canónica.
 
 El sistema debe permitir que el cliente consulte un siniestro utilizando un identificador ficticio.
 
@@ -121,7 +141,7 @@ En caso de implementarse, utilizará únicamente información ficticia como:
 ## RF-03. Visualizar el detalle del siniestro
 
 **Origen:** Derivado del caso.  
-**Estado actual:** Implementado con datos ficticios locales.
+**Estado actual:** Pendiente de reimplementación sobre la nueva base canónica.
 
 Una vez consultado un siniestro, el sistema debe presentar la información necesaria para comprender el caso.
 
@@ -140,7 +160,7 @@ La información considerada es:
 ## RF-04. Visualizar el estado y la etapa del siniestro
 
 **Origen:** Caso oficial.  
-**Estado actual:** Implementado con datos ficticios locales.
+**Estado actual:** Pendiente de reimplementación sobre la nueva base canónica.
 
 El sistema debe permitir que el cliente identifique claramente el estado actual de su siniestro.
 
@@ -156,7 +176,7 @@ Los estados definidos por el caso son:
 ## RF-05. Consultar el historial de gestiones
 
 **Origen:** Caso oficial.  
-**Estado actual:** Implementado con datos ficticios locales.
+**Estado actual:** Pendiente de reimplementación sobre la nueva base canónica.
 
 El sistema debe permitir revisar el historial de gestiones realizadas sobre el siniestro.
 
@@ -274,7 +294,7 @@ La interfaz debe utilizar Material Design 3.
 ## RNF-06. Arquitectura MVVM
 
 **Origen:** Caso oficial  
-**Estado actual:** Cumplido en la estructura Android actual.
+**Estado actual:** Pendiente de reimplementación sobre la nueva base canónica.
 
 La aplicación debe utilizar arquitectura MVVM para mantener separadas la interfaz, el estado y la lógica de presentación.
 
@@ -459,44 +479,36 @@ El desarrollo debe concentrarse primero en el recorrido principal necesario para
 
 # 6. Estado actual de implementación
 
-## 6.1 Implementado
+## 6.1 Base implementada
 
-Actualmente el proyecto contiene:
+Actualmente el repositorio contiene la nueva base canónica Android Studio:
 
-- proyecto Android base,
+- proyecto `SeguimientoSiniestros`,
+- package `com.example.seguimientosiniestros`,
+- Minimum SDK 24,
+- Target SDK 36,
 - Kotlin,
 - Jetpack Compose,
 - Material Design 3,
-- arquitectura MVVM inicial,
-- navegación entre pantallas,
+- tema Compose inicial,
+- `MainActivity` generada como Empty Activity,
+- Gradle Wrapper,
+- pruebas de ejemplo generadas por Android Studio,
+- CI preparado para compilar el APK y ejecutar pruebas unitarias.
+
+La pantalla actual corresponde al estado inicial del proyecto y todavía no implementa el flujo funcional del siniestro.
+
+## 6.2 Pendiente de reimplementación y desarrollo
+
+A partir de esta base falta implementar:
+
+- estructura MVVM,
+- navegación,
 - modelos principales del dominio,
-- consulta de un siniestro ficticio,
-- validación de identificador inexistente,
-- visualización del detalle,
-- visualización del estado,
-- visualización del historial,
-- datos ficticios locales,
-- compilación automática del APK mediante integración continua.
-
-El flujo funcional disponible actualmente es:
-
-```text
-Inicio
-  ↓
-Consultar SIN-2026-001
-  ↓
-Detalle
-  ├── Seguimiento
-  └── Historial
-```
-
----
-
-## 6.2 Pendiente
-
-Todavía falta implementar:
-
-- definición final del registro de siniestro según la rúbrica,
+- consulta de siniestro,
+- detalle del siniestro,
+- seguimiento y estados,
+- historial,
 - Room/SQLite,
 - backend Spring Boot,
 - microservicios,
@@ -506,7 +518,10 @@ Todavía falta implementar:
 - notificaciones,
 - actualización remota de estados,
 - pruebas unitarias del backend,
-- integración completa Android ↔ backend.
+- integración completa Android ↔ backend,
+- definición final del registro de siniestro según la rúbrica.
+
+Las tareas de implementación deben seguir el orden y los responsables definidos en Trello.
 
 ---
 
@@ -577,15 +592,15 @@ Incluyó visión, alcance, requerimientos, arquitectura inicial, modelo de datos
 
 ## Sprint 1 · Base Android
 
-**Estado:** Completado.
+**Estado histórico:** Completado en una implementación anterior.
 
-Incluyó proyecto Android, Kotlin, Jetpack Compose, Material Design 3, estructura MVVM, navegación y modelos de dominio.
+El **2 de octubre de 2026** el equipo decidió reemplazar esa implementación por la nueva base canónica `SeguimientoSiniestros`. La experiencia previa se conserva en Git, pero el desarrollo vigente parte desde la nueva Empty Activity.
 
 ## Sprint 2 · Consulta y seguimiento local
 
-**Estado:** Completado.
+**Estado histórico:** Completado en una implementación anterior.
 
-Incluyó consulta de `SIN-2026-001`, validación de identificador inexistente, detalle, seguimiento, historial, repositorio ficticio y ViewModel.
+La implementación previa de consulta y seguimiento quedó preservada en el historial Git, pero no forma parte de la nueva base actual. Las funcionalidades se reimplementarán según las tareas vigentes del Sprint 3.
 
 ## Sprint 3 · Room + Backend + Retrofit + Integración + Evidencias
 
@@ -596,11 +611,14 @@ Este sprint corresponde a la **unión de los antiguos Sprint 3 y Sprint 4**.
 
 ### Nicolás Iván Vega Linero
 
-1. **A1 · Room: dependencias y entidades**
-2. **A2 · Room: DAO y base de datos**
-3. **A3 · Room: repositorio local y pruebas**
-4. **A4 · Retrofit: configuración, DTOs y ApiService**
-5. **A5 · Retrofit: repositorio remoto + ViewModel**
+1. **A0.1 · Estructura MVVM y modelos de dominio**
+2. **A0.2 · Navegación y pantallas base**
+3. **A0.3 · Sistema visual reutilizable Compose**
+4. **A1 · Room: dependencias y entidades**
+5. **A2 · Room: DAO y base de datos**
+6. **A3 · Room: repositorio local y pruebas**
+7. **A4 · Retrofit: configuración, DTOs y ApiService**
+8. **A5 · Retrofit: repositorio remoto + ViewModel**
 
 ### Colaborador del repositorio
 
@@ -621,6 +639,8 @@ Este sprint corresponde a la **unión de los antiguos Sprint 3 y Sprint 4**.
 
 El Sprint 3 se considera terminado cuando:
 
+- la nueva base cuenta con estructura MVVM, modelos, navegación y pantallas base,
+- existe un sistema visual Compose reutilizable coherente con el trabajo desarrollado en clases,
 - Room/SQLite funciona desde Repository,
 - Spring Boot y los endpoints REST funcionan,
 - Retrofit conecta Android con el backend,
