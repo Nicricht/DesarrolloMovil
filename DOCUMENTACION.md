@@ -319,11 +319,13 @@ La estructura base ya incorpora modelos de dominio, contrato de Repository, `Mai
 ## RNF-07. Persistencia local con Room/SQLite
 
 **Origen:** Caso oficial  
-**Estado actual:** Pendiente.
+**Estado actual:** En implementación.
 
 El frontend móvil debe utilizar Room/SQLite para la persistencia local requerida por el MVP.
 
-La interfaz de usuario no debe acceder directamente a la base de datos.
+La base ya incorpora Room 2.8.5, las entidades locales `SiniestroEntity` y `GestionHistorialEntity`, relación mediante `siniestroId` y mappers entre dominio y persistencia. Los DAO y la base de datos Room se implementan en A2.
+
+La interfaz de usuario no accede directamente a Room.
 
 ---
 
@@ -520,7 +522,9 @@ Actualmente el repositorio contiene la nueva base canónica Android Studio:
 - sistema visual Compose reutilizable con `Dimens`, estilos de botones, campos y tarjetas,
 - componentes compartidos `PantallaBase`, `BotonPrincipal`, `TarjetaInformativa` y `EstadoSiniestroChip`,
 - tema visual propio aplicado a las pantallas base,
-- pruebas unitarias de estados oficiales, construcción de rutas y orden de etapas.
+- Room configurado con entidades locales para siniestro e historial,
+- mappers dominio ↔ entidad para mantener separadas las capas,
+- pruebas unitarias de estados oficiales, construcción de rutas, orden de etapas y mapeo de entidades.
 
 La aplicación ya inicia en una navegación Compose básica y las pantallas Inicio, Consulta, Detalle, Seguimiento, Historial, Evidencias y Notificaciones comparten un sistema visual reutilizable. Todavía no consumen datos reales ni están conectadas al Repository.
 
@@ -638,7 +642,7 @@ Este sprint corresponde a la **unión de los antiguos Sprint 3 y Sprint 4**.
 1. **A0.1 · Estructura MVVM y modelos de dominio** ✅
 2. **A0.2 · Navegación y pantallas base** ✅
 3. **A0.3 · Sistema visual reutilizable Compose** ✅
-4. **A1 · Room: dependencias y entidades**
+4. **A1 · Room: dependencias y entidades** ✅
 5. **A2 · Room: DAO y base de datos**
 6. **A3 · Room: repositorio local y pruebas**
 7. **A4 · Retrofit: configuración, DTOs y ApiService**
