@@ -31,3 +31,6 @@ jobs:
 
       - name: Ejecutar pruebas unitarias
         run: ./gradlew :app:testDebugUnitTest
+
+      - name: Compilar pruebas instrumentadas
+        run: ./gradlew :app:assembleDebugAndroidTest

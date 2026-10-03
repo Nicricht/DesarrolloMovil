@@ -143,11 +143,20 @@ Implementado en A1:
 - índice sobre `siniestroId`,
 - mappers dominio ↔ entidad.
 
+Implementado en A2:
+
+- `SiniestroDao` con upsert y búsqueda por identificador,
+- `GestionHistorialDao` con upsert individual/masivo,
+- consulta de historial por `siniestroId` ordenada por `fechaHora DESC`,
+- `AppDatabase` versión 1 con ambas entidades,
+- instancia única de Room mediante `getInstance(context)`,
+- prueba instrumentada con base en memoria para verificar guardado/recuperación de `SIN-2026-001` y orden de su historial.
+
 Pendiente para las siguientes tareas:
 
-- DAO y `RoomDatabase`,
+- repositorio local,
 - entidades de evidencias y notificaciones cuando su flujo lo requiera,
-- estrategia de repositorio local y cache.
+- estrategia final de cache/sincronización.
 
 Room funcionará como persistencia local y cache.
 
