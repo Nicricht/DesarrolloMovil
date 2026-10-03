@@ -232,4 +232,17 @@ http://10.0.2.2:8080/api/v1/
 
 Esta URL es una decisión técnica de desarrollo local. `10.0.2.2` permite que el emulador Android acceda al servidor que se ejecuta en el computador host.
 
-La conexión de esta fuente remota con el Repository y el ViewModel corresponde al bloque A5. Los endpoints de evidencias y notificaciones se implementarán únicamente cuando su flujo sea desarrollado.
+A5 implementa actualmente:
+
+- `RemoteSiniestroDataSource`,
+- mappers DTO → dominio,
+- `RemoteFirstSiniestroRepository`,
+- cache de respuestas exitosas en Room,
+- fallback a Room ante errores de conectividad,
+- `MainViewModel` consumiendo solo `SiniestroRepository`,
+- estados de carga y error en la capa de presentación,
+- prueba instrumentada de integración Retrofit → Repository → Room usando MockWebServer.
+
+La validación final Android → Spring Boot real todavía depende de que el backend B1-B4 del colaborador esté disponible. Hasta ese momento no se considera demostrado el criterio E2E contra Spring Boot.
+
+Los endpoints de evidencias y notificaciones se implementarán únicamente cuando su flujo sea desarrollado.
