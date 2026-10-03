@@ -332,11 +332,18 @@ La interfaz de usuario no accede directamente a Room.
 ## RNF-08. Integración mediante Retrofit
 
 **Origen:** Caso oficial  
-**Estado actual:** Pendiente.
+**Estado actual:** En implementación.
 
-La aplicación Android debe integrarse con el backend mediante Retrofit.
+La aplicación Android incorpora Retrofit y converter Gson, DTOs para siniestro e historial, `SiniestroApiService` y un `RetrofitProvider` reutilizable.
 
-Las llamadas remotas deben mantenerse fuera de la capa de interfaz.
+El contrato remoto implementado actualmente cubre:
+
+- `GET /api/v1/siniestros/{id}`,
+- `GET /api/v1/siniestros/{id}/historial`.
+
+La URL base académica para emulador es `http://10.0.2.2:8080/api/v1/`, donde `10.0.2.2` representa el host del computador desde el emulador Android. La conexión del Repository con esta fuente remota corresponde a A5.
+
+Las llamadas remotas se mantienen fuera de la capa de interfaz.
 
 ---
 
@@ -533,19 +540,21 @@ Actualmente el repositorio contiene la nueva base canónica Android Studio:
 - Detalle, Seguimiento e Historial leyendo el estado local desde el ViewModel,
 - pruebas instrumentadas con base en memoria para validar persistencia desde DAO y Repository,
 - ejecución real de la suite instrumentada en emulador Android API 35 desde GitHub Actions,
+- Retrofit + Gson configurados para el contrato REST académico,
+- `SiniestroDto`, `GestionHistorialDto`, `SiniestroApiService` y `RetrofitProvider`,
+- pruebas unitarias con MockWebServer que validan rutas y deserialización del contrato REST,
 - pruebas unitarias de estados oficiales, construcción de rutas, orden de etapas y mapeo de entidades.
 
-La aplicación ya inicia en una navegación Compose básica y las pantallas comparten un sistema visual reutilizable. El flujo Consulta → Detalle → Seguimiento/Historial ya funciona con datos ficticios persistidos localmente mediante Room y Repository. La integración remota con Spring Boot/Retrofit sigue pendiente.
+La aplicación ya inicia en una navegación Compose básica y las pantallas comparten un sistema visual reutilizable. El flujo Consulta → Detalle → Seguimiento/Historial funciona con datos ficticios persistidos localmente mediante Room y Repository. El cliente Retrofit ya está preparado y validado contra el contrato propuesto; falta conectarlo al Repository y a un backend Spring Boot disponible.
 
 ## 6.2 Pendiente de reimplementación y desarrollo
 
 A partir de esta base falta implementar:
 
-- reemplazar/complementar la fuente local con consulta remota mediante Retrofit,
+- conectar `SiniestroApiService` al Repository y ViewModel,
 - backend Spring Boot,
 - microservicios,
-- API REST,
-- Retrofit,
+- implementación real del API REST en backend,
 - evidencias con imágenes/PDF/cámara,
 - notificaciones,
 - actualización remota de estados,
@@ -649,7 +658,7 @@ Este sprint corresponde a la **unión de los antiguos Sprint 3 y Sprint 4**.
 4. **A1 · Room: dependencias y entidades** ✅
 5. **A2 · Room: DAO y base de datos** ✅
 6. **A3 · Room: repositorio local y pruebas** ✅
-7. **A4 · Retrofit: configuración, DTOs y ApiService**
+7. **A4 · Retrofit: configuración, DTOs y ApiService** ✅
 8. **A5 · Retrofit: repositorio remoto + ViewModel**
 
 ### Colaborador del repositorio

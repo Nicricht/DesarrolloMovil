@@ -204,11 +204,32 @@ Estados HTTP mínimos:
 
 ## 8. Retrofit
 
-Interfaces previstas:
+**Estado actual:** base implementada para consulta de siniestro e historial.
+
+Implementado en Android:
+
+- Retrofit 2.11.0,
+- converter Gson,
+- `SiniestroDto`,
+- `GestionHistorialDto`,
+- `SiniestroApiService`,
+- `RetrofitProvider`,
+- permiso `INTERNET`,
+- pruebas de contrato con MockWebServer.
+
+La interfaz implementa actualmente:
 
 ```text
-SiniestrosApi
-NotificacionesApi
+GET siniestros/{id}
+GET siniestros/{id}/historial
 ```
 
-La implementación concreta se realizará cuando comience la fase de código.
+URL base de desarrollo para el emulador Android:
+
+```text
+http://10.0.2.2:8080/api/v1/
+```
+
+Esta URL es una decisión técnica de desarrollo local. `10.0.2.2` permite que el emulador Android acceda al servidor que se ejecuta en el computador host.
+
+La conexión de esta fuente remota con el Repository y el ViewModel corresponde al bloque A5. Los endpoints de evidencias y notificaciones se implementarán únicamente cuando su flujo sea desarrollado.
