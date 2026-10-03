@@ -4,12 +4,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.seguimientosiniestros.data.repository.RepositoryProvider
 import com.example.seguimientosiniestros.ui.screens.ConsultaScreen
 import com.example.seguimientosiniestros.ui.screens.DetalleScreen
 import com.example.seguimientosiniestros.ui.screens.EvidenciasScreen
@@ -17,10 +23,20 @@ import com.example.seguimientosiniestros.ui.screens.HistorialScreen
 import com.example.seguimientosiniestros.ui.screens.InicioScreen
 import com.example.seguimientosiniestros.ui.screens.NotificacionesScreen
 import com.example.seguimientosiniestros.ui.screens.SeguimientoScreen
+import com.example.seguimientosiniestros.ui.viewmodel.MainViewModel
+import com.example.seguimientosiniestros.ui.viewmodel.MainViewModelFactory
 
 @Composable
 fun SeguimientoSiniestrosApp() {
     val navController = rememberNavController()
+    val context = LocalContext.current.applicationContext
+    val repository = remember(context) {
+        RepositoryProvider.provideSiniestroRepository(context)
+    }
+    val mainViewModel: MainViewModel = viewModel(
+        factory = MainViewModelFactory(repository)
+    )
+    val uiState by mainViewModel.uiState.collectAsState()
 
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         NavHost(
@@ -52,6 +68,8 @@ fun SeguimientoSiniestrosApp() {
 
                 DetalleScreen(
                     siniestroId = siniestroId,
+                    uiState = uiState,
+                    onCargar = { mainViewModel.consultarSiniestro(siniestroId) },
                     onVolver = { navController.popBackStack() },
                     onSeguimiento = {
                         navController.navigate(Destino.seguimiento(siniestroId))
@@ -69,8 +87,12 @@ fun SeguimientoSiniestrosApp() {
                 route = Destino.SEGUIMIENTO,
                 arguments = listOf(navArgument("siniestroId") { type = NavType.StringType })
             ) { backStackEntry ->
+                val siniestroId = backStackEntry.arguments?.getString("siniestroId").orEmpty()
+
                 SeguimientoScreen(
-                    siniestroId = backStackEntry.arguments?.getString("siniestroId").orEmpty(),
+                    siniestroId = siniestroId,
+                    uiState = uiState,
+                    onCargar = { mainViewModel.consultarSiniestro(siniestroId) },
                     onVolver = { navController.popBackStack() }
                 )
             }
@@ -79,8 +101,12 @@ fun SeguimientoSiniestrosApp() {
                 route = Destino.HISTORIAL,
                 arguments = listOf(navArgument("siniestroId") { type = NavType.StringType })
             ) { backStackEntry ->
+                val siniestroId = backStackEntry.arguments?.getString("siniestroId").orEmpty()
+
                 HistorialScreen(
-                    siniestroId = backStackEntry.arguments?.getString("siniestroId").orEmpty(),
+                    siniestroId = siniestroId,
+                    uiState = uiState,
+                    onCargar = { mainViewModel.consultarSiniestro(siniestroId) },
                     onVolver = { navController.popBackStack() }
                 )
             }

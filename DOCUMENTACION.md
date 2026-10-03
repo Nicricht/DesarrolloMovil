@@ -312,7 +312,7 @@ La interfaz debe utilizar Material Design 3.
 
 La aplicación debe utilizar arquitectura MVVM para mantener separadas la interfaz, el estado y la lógica de presentación.
 
-La estructura base ya incorpora modelos de dominio, contrato de Repository, `MainViewModel` y `MainUiState`. La conexión efectiva de las pantallas con el ViewModel se completará en las tareas siguientes del Sprint 3.
+La estructura MVVM ya conecta las pantallas de Detalle, Seguimiento e Historial con `MainViewModel` y con `SiniestroRepository`. El ViewModel trabaja contra el contrato de Repository y no conoce Room ni sus DAO directamente.
 
 ---
 
@@ -323,7 +323,7 @@ La estructura base ya incorpora modelos de dominio, contrato de Repository, `Mai
 
 El frontend móvil debe utilizar Room/SQLite para la persistencia local requerida por el MVP.
 
-La base incorpora Room 2.8.5, las entidades locales `SiniestroEntity` y `GestionHistorialEntity`, relación mediante `siniestroId`, mappers entre dominio y persistencia, `SiniestroDao`, `GestionHistorialDao` y `AppDatabase`. La persistencia local ya permite guardar/actualizar siniestros y recuperar su historial ordenado por fecha descendente. GitHub Actions ejecuta además las pruebas instrumentadas dentro de un emulador Android, por lo que la validación de Room ya se realiza en runtime Android y no solo por compilación.
+La base incorpora Room 2.8.5, las entidades locales `SiniestroEntity` y `GestionHistorialEntity`, relación mediante `siniestroId`, mappers, DAO, `AppDatabase`, `LocalSiniestroDataSource` y `LocalSiniestroRepository`. La aplicación ya guarda y consulta siniestros e historial a través del Repository. GitHub Actions ejecuta las pruebas instrumentadas dentro de un emulador Android, por lo que la validación de Room y Repository se realiza en runtime Android.
 
 La interfaz de usuario no accede directamente a Room.
 
@@ -527,22 +527,21 @@ Actualmente el repositorio contiene la nueva base canónica Android Studio:
 - DAO para guardar/actualizar y consultar siniestros,
 - DAO de historial con consulta ordenada por fecha descendente,
 - `AppDatabase` como base Room de la aplicación,
-- prueba instrumentada con base en memoria para guardar/recuperar `SIN-2026-001` y validar el orden del historial,
+- `LocalSiniestroDataSource` y `LocalSiniestroRepository` como acceso local desacoplado de la UI,
+- `MainViewModel` conectado al Repository sin dependencia directa de Room,
+- dataset académico ficticio `SIN-2026-001` para demostrar el flujo local,
+- Detalle, Seguimiento e Historial leyendo el estado local desde el ViewModel,
+- pruebas instrumentadas con base en memoria para validar persistencia desde DAO y Repository,
 - ejecución real de la suite instrumentada en emulador Android API 35 desde GitHub Actions,
 - pruebas unitarias de estados oficiales, construcción de rutas, orden de etapas y mapeo de entidades.
 
-La aplicación ya inicia en una navegación Compose básica y las pantallas Inicio, Consulta, Detalle, Seguimiento, Historial, Evidencias y Notificaciones comparten un sistema visual reutilizable. Todavía no consumen datos reales ni están conectadas al Repository.
+La aplicación ya inicia en una navegación Compose básica y las pantallas comparten un sistema visual reutilizable. El flujo Consulta → Detalle → Seguimiento/Historial ya funciona con datos ficticios persistidos localmente mediante Room y Repository. La integración remota con Spring Boot/Retrofit sigue pendiente.
 
 ## 6.2 Pendiente de reimplementación y desarrollo
 
 A partir de esta base falta implementar:
 
-- conectar las pantallas con el ViewModel y el Repository,
-- consulta de siniestro,
-- detalle del siniestro,
-- seguimiento y estados,
-- historial,
-- Room/SQLite,
+- reemplazar/complementar la fuente local con consulta remota mediante Retrofit,
 - backend Spring Boot,
 - microservicios,
 - API REST,
@@ -649,7 +648,7 @@ Este sprint corresponde a la **unión de los antiguos Sprint 3 y Sprint 4**.
 3. **A0.3 · Sistema visual reutilizable Compose** ✅
 4. **A1 · Room: dependencias y entidades** ✅
 5. **A2 · Room: DAO y base de datos** ✅
-6. **A3 · Room: repositorio local y pruebas**
+6. **A3 · Room: repositorio local y pruebas** ✅
 7. **A4 · Retrofit: configuración, DTOs y ApiService**
 8. **A5 · Retrofit: repositorio remoto + ViewModel**
 
