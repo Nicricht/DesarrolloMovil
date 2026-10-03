@@ -6,12 +6,12 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.example.seguimientosiniestros.data.local.AppDatabase
 import com.example.seguimientosiniestros.data.local.LocalSiniestroDataSource
 import com.example.seguimientosiniestros.data.remote.RemoteSiniestroDataSource
-import com.example.seguimientosiniestros.data.remote.RetrofitProvider
+import com.example.seguimientosiniestros.data.remote.SiniestroApiService
+import com.example.seguimientosiniestros.data.remote.dto.GestionHistorialDto
+import com.example.seguimientosiniestros.data.remote.dto.SiniestroDto
 import com.example.seguimientosiniestros.data.repository.RemoteFirstSiniestroRepository
 import com.example.seguimientosiniestros.domain.model.EstadoSiniestro
 import kotlinx.coroutines.runBlocking
-import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -23,7 +23,6 @@ import org.junit.runner.RunWith
 class RemoteFirstSiniestroRepositoryTest {
 
     private lateinit var database: AppDatabase
-    private lateinit var server: MockWebServer
     private lateinit var repository: RemoteFirstSiniestroRepository
 
     @Before
@@ -37,77 +36,49 @@ class RemoteFirstSiniestroRepositoryTest {
             .allowMainThreadQueries()
             .build()
 
-        server = MockWebServer()
-        server.start()
-
-        val local = LocalSiniestroDataSource(
-            siniestroDao = database.siniestroDao(),
-            gestionHistorialDao = database.gestionHistorialDao()
-        )
-
-        val remoto = RemoteSiniestroDataSource(
-            apiService = RetrofitProvider.crearSiniestroApi(
-                server.url("/api/v1/").toString()
+        val apiFalsa = object : SiniestroApiService {
+            override suspend fun obtenerSiniestro(id: String) = SiniestroDto(
+                id = id,
+                tipo = "Accidente vehicular",
+                fechaOcurrencia = "2026-09-20",
+                fechaReporte = "2026-09-21",
+                estado = "EN_EVALUACION",
+                equipoAsignado = "Equipo Norte",
+                ultimaActualizacion = "2026-09-24T15:30:00"
             )
-        )
+
+            override suspend fun obtenerHistorial(id: String) = listOf(
+                GestionHistorialDto(
+                    id = "H-003",
+                    fechaHora = "2026-09-24T15:30:00",
+                    descripcion = "Caso asignado a equipo liquidador",
+                    estadoResultante = "EN_EVALUACION"
+                ),
+                GestionHistorialDto(
+                    id = "H-001",
+                    fechaHora = "2026-09-21T09:10:00",
+                    descripcion = "Siniestro recibido",
+                    estadoResultante = "RECIBIDO"
+                )
+            )
+        }
 
         repository = RemoteFirstSiniestroRepository(
-            remoteDataSource = remoto,
-            localDataSource = local
+            remoteDataSource = RemoteSiniestroDataSource(apiFalsa),
+            localDataSource = LocalSiniestroDataSource(
+                siniestroDao = database.siniestroDao(),
+                gestionHistorialDao = database.gestionHistorialDao()
+            )
         )
     }
 
     @After
     fun cerrar() {
         database.close()
-        server.shutdown()
     }
 
     @Test
-    fun consultaRemotaSeMapeaYQuedaEnCacheRoom() = runBlocking {
-        server.enqueue(
-            MockResponse()
-                .setResponseCode(200)
-                .setHeader("Content-Type", "application/json")
-                .setBody(
-                    """
-                    {
-                      "id": "SIN-2026-001",
-                      "tipo": "Accidente vehicular",
-                      "fechaOcurrencia": "2026-09-20",
-                      "fechaReporte": "2026-09-21",
-                      "estado": "EN_EVALUACION",
-                      "equipoAsignado": "Equipo Norte",
-                      "ultimaActualizacion": "2026-09-24T15:30:00"
-                    }
-                    """.trimIndent()
-                )
-        )
-
-        server.enqueue(
-            MockResponse()
-                .setResponseCode(200)
-                .setHeader("Content-Type", "application/json")
-                .setBody(
-                    """
-                    [
-                      {
-                        "id": "H-003",
-                        "fechaHora": "2026-09-24T15:30:00",
-                        "descripcion": "Caso asignado a equipo liquidador",
-                        "estadoResultante": "EN_EVALUACION"
-                      },
-                      {
-                        "id": "H-001",
-                        "fechaHora": "2026-09-21T09:10:00",
-                        "descripcion": "Siniestro recibido",
-                        "estadoResultante": "RECIBIDO"
-                      }
-                    ]
-                    """.trimIndent()
-                )
-        )
-
+    fun respuestaRemotaSeMapeaYQuedaEnCacheRoom() = runBlocking {
         val siniestro = repository.obtenerSiniestro("SIN-2026-001")
         val historial = repository.obtenerHistorial("SIN-2026-001")
 
