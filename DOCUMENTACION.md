@@ -323,7 +323,7 @@ La estructura base ya incorpora modelos de dominio, contrato de Repository, `Mai
 
 El frontend móvil debe utilizar Room/SQLite para la persistencia local requerida por el MVP.
 
-La base incorpora Room 2.8.5, las entidades locales `SiniestroEntity` y `GestionHistorialEntity`, relación mediante `siniestroId`, mappers entre dominio y persistencia, `SiniestroDao`, `GestionHistorialDao` y `AppDatabase`. La persistencia local ya permite guardar/actualizar siniestros y recuperar su historial ordenado por fecha descendente.
+La base incorpora Room 2.8.5, las entidades locales `SiniestroEntity` y `GestionHistorialEntity`, relación mediante `siniestroId`, mappers entre dominio y persistencia, `SiniestroDao`, `GestionHistorialDao` y `AppDatabase`. La persistencia local ya permite guardar/actualizar siniestros y recuperar su historial ordenado por fecha descendente. GitHub Actions ejecuta además las pruebas instrumentadas dentro de un emulador Android, por lo que la validación de Room ya se realiza en runtime Android y no solo por compilación.
 
 La interfaz de usuario no accede directamente a Room.
 
@@ -512,7 +512,7 @@ Actualmente el repositorio contiene la nueva base canónica Android Studio:
 - `MainActivity` generada como Empty Activity,
 - Gradle Wrapper,
 - pruebas de ejemplo generadas por Android Studio,
-- CI preparado para compilar el APK y ejecutar pruebas unitarias,
+- CI preparado para compilar el APK, ejecutar pruebas unitarias y levantar un emulador Android para ejecutar `connectedDebugAndroidTest`,
 - modelos de dominio `Siniestro`, `GestionHistorial`, `Evidencia` y `Notificacion`,
 - enum `EstadoSiniestro` con los cuatro estados definidos por el caso,
 - contrato `SiniestroRepository`,
@@ -528,6 +528,7 @@ Actualmente el repositorio contiene la nueva base canónica Android Studio:
 - DAO de historial con consulta ordenada por fecha descendente,
 - `AppDatabase` como base Room de la aplicación,
 - prueba instrumentada con base en memoria para guardar/recuperar `SIN-2026-001` y validar el orden del historial,
+- ejecución real de la suite instrumentada en emulador Android API 35 desde GitHub Actions,
 - pruebas unitarias de estados oficiales, construcción de rutas, orden de etapas y mapeo de entidades.
 
 La aplicación ya inicia en una navegación Compose básica y las pantallas Inicio, Consulta, Detalle, Seguimiento, Historial, Evidencias y Notificaciones comparten un sistema visual reutilizable. Todavía no consumen datos reales ni están conectadas al Repository.
