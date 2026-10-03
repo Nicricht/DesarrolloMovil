@@ -130,12 +130,24 @@ erDiagram
 
 ## 4. Room
 
-Tablas propuestas:
+**Estado actual:** implementación iniciada.
 
-- siniestros
-- historial
-- evidencias
-- notificaciones
+Implementado en A1:
+
+- dependencia Room 2.8.5,
+- `SiniestroEntity` para la tabla `siniestros`,
+- `GestionHistorialEntity` para la tabla `historial`,
+- clave primaria `id` en ambas entidades,
+- clave foránea `GestionHistorialEntity.siniestroId → SiniestroEntity.id`,
+- eliminación en cascada del historial cuando se elimine su siniestro,
+- índice sobre `siniestroId`,
+- mappers dominio ↔ entidad.
+
+Pendiente para las siguientes tareas:
+
+- DAO y `RoomDatabase`,
+- entidades de evidencias y notificaciones cuando su flujo lo requiera,
+- estrategia de repositorio local y cache.
 
 Room funcionará como persistencia local y cache.
 
