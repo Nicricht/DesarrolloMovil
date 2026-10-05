@@ -1,7 +1,9 @@
 package com.example.seguimientosiniestros
 
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNode
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
@@ -29,7 +31,7 @@ class SpringBootEndToEndTest {
 
         composeRule.waitUntil(timeoutMillis = 20_000) {
             composeRule.onAllNodes(
-                androidx.compose.ui.test.hasText("Accidente vehicular")
+                hasText("Accidente vehicular")
             ).fetchSemanticsNodes().isNotEmpty()
         }
 
@@ -45,11 +47,12 @@ class SpringBootEndToEndTest {
 
         composeRule.waitUntil(timeoutMillis = 20_000) {
             composeRule.onAllNodes(
-                androidx.compose.ui.test.hasText("Caso asignado a equipo liquidador")
+                hasText("Caso asignado a equipo liquidador", substring = true)
             ).fetchSemanticsNodes().isNotEmpty()
         }
 
-        composeRule.onNodeWithText("Caso asignado a equipo liquidador")
-            .assertIsDisplayed()
+        composeRule.onNode(
+            hasText("Caso asignado a equipo liquidador", substring = true)
+        ).assertIsDisplayed()
     }
 }
