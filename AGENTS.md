@@ -35,16 +35,12 @@ La cantidad de pruebas debe ser proporcional al riesgo.
 
 La cobertura es una señal, no una prueba de calidad.
 
-Piso automático para código ejecutable nuevo o modificado:
+Quality Gate obligatorio para código ejecutable nuevo o modificado:
 
-- líneas diferenciales: **>= 80%**;
-- ramas diferenciales: **>= 70%** cuando existan ramas.
+- líneas diferenciales: **100%**;
+- ramas diferenciales: **100%** cuando existan ramas.
 
-Para lógica HIGH nueva o modificada, el objetivo es:
-
-- líneas significativas: **100%**;
-- ramas significativas: **100%**;
-- métodos significativos: **100%**.
+Este umbral aplica a LOW, MEDIUM y HIGH. Para lógica HIGH nueva o modificada también se exige como objetivo **100% de métodos significativos**.
 
 No se puede afirmar 100% de cobertura si el reporte no lo demuestra.
 
