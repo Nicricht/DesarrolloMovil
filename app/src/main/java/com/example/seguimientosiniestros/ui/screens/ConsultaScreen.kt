@@ -13,6 +13,7 @@ import com.example.seguimientosiniestros.ui.components.BotonPrincipal
 import com.example.seguimientosiniestros.ui.components.PantallaBase
 import com.example.seguimientosiniestros.ui.styles.FormaCampo
 import com.example.seguimientosiniestros.ui.styles.coloresCampo
+import com.example.seguimientosiniestros.validation.SiniestroValidator
 
 @Composable
 fun ConsultaScreen(
@@ -20,6 +21,12 @@ fun ConsultaScreen(
     onBuscar: (String) -> Unit
 ) {
     var identificador by rememberSaveable { mutableStateOf("") }
+    var mostrarError by rememberSaveable { mutableStateOf(false) }
+    val mensajeError = if (mostrarError) {
+        SiniestroValidator.validarIdentificador(identificador)
+    } else {
+        null
+    }
 
     PantallaBase(
         titulo = "Consultar siniestro",
@@ -30,7 +37,10 @@ fun ConsultaScreen(
             value = identificador,
             onValueChange = { identificador = it },
             label = { Text(text = "Identificador") },
-            supportingText = { Text(text = "Ejemplo: SIN-2026-001") },
+            supportingText = {
+                Text(text = mensajeError ?: "Ejemplo: SIN-2026-001")
+            },
+            isError = mensajeError != null,
             singleLine = true,
             shape = FormaCampo,
             colors = coloresCampo(),
@@ -39,8 +49,13 @@ fun ConsultaScreen(
 
         BotonPrincipal(
             texto = "Buscar siniestro",
-            onClick = { onBuscar(identificador.trim()) },
-            enabled = identificador.isNotBlank()
+            onClick = {
+                mostrarError = true
+
+                if (SiniestroValidator.validarIdentificador(identificador) == null) {
+                    onBuscar(identificador.trim().uppercase())
+                }
+            }
         )
     }
 }
