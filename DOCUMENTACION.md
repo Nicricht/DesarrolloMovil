@@ -102,6 +102,32 @@ Esta referencia se utilizará para observar la forma de organización mostrada e
 
 La referencia **no define requerimientos funcionales del proyecto de siniestros**. Ante cualquier diferencia, la prioridad continúa siendo: pauta/rúbrica oficial, caso DSY1105 y esta documentación vigente.
 
+## 1.5 Política de calidad y pruebas
+
+El repositorio adopta una política de QA basada en la utilizada en RecepVoz, adaptada al alcance académico y al stack Android + Spring Boot.
+
+Las reglas completas están en:
+
+- `AGENTS.md`,
+- `docs/engineering/QA_POLICY.md`,
+- `docs/engineering/DEFINITION_OF_DONE.md`.
+
+Principios obligatorios:
+
+- clasificar los cambios como LOW, MEDIUM o HIGH;
+- usar RED → GREEN cuando corresponda;
+- probar cada comportamiento en el nivel más bajo que realmente lo demuestre;
+- ejecutar Room en emulador cuando se pruebe persistencia Android;
+- usar pruebas de contrato para Retrofit;
+- probar Spring Boot y sus endpoints cuando exista backend;
+- mantener E2E para el happy path principal;
+- no fusionar PR con Quality Gate rojo;
+- certificar siempre el HEAD exacto;
+- cobertura diferencial mínima de 80% en líneas y 70% en ramas cuando existan ramas;
+- para lógica HIGH nueva o modificada, buscar 100% de cobertura significativa sin agregar pruebas artificiales.
+
+La cobertura se utiliza como señal de zonas sin protección, no como sustituto de pruebas correctas.
+
 ---
 
 # 2. Descripción general
