@@ -43,6 +43,13 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.version}</version>
+                <!-- La clase de arranque no contiene lógica de negocio. El contexto se valida
+                     con @SpringBootTest y el arranque real se valida en el E2E. -->
+                <configuration>
+                    <excludes>
+                        <exclude>**/BackendApplication.class</exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
