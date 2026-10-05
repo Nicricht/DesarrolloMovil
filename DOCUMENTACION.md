@@ -597,8 +597,8 @@ La aplicación ya inicia en una navegación Compose básica y las pantallas comp
 A partir de esta base falta implementar:
 
 - completar el requisito de microservicios si la pauta exige más de un servicio real,
-- formularios y validaciones visuales pendientes según pauta,
-- validaciones centralizadas/desacopladas,
+- formulario de consulta con validación visual por campo implementado; los formularios que se agreguen en evidencias deberán mantener el mismo criterio,
+- validación del identificador centralizada en `ConsultaSiniestroValidator`; las próximas reglas reutilizables deberán mantenerse fuera de los Composables,
 - evidencias con imágenes/PDF/cámara,
 - notificaciones,
 - actualización remota de estados,
