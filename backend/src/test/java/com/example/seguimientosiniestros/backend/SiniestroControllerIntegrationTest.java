@@ -18,6 +18,13 @@ class SiniestroControllerIntegrationTest {
     private MockMvc mockMvc;
 
     @Test
+    void healthResponde200() throws Exception {
+        mockMvc.perform(get("/api/v1/health"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("UP"));
+    }
+
+    @Test
     void consultaValidaResponde200() throws Exception {
         mockMvc.perform(get("/api/v1/siniestros/SIN-2026-001"))
                 .andExpect(status().isOk())
