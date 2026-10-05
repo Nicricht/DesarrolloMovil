@@ -123,8 +123,8 @@ Principios obligatorios:
 - mantener E2E para el happy path principal;
 - no fusionar PR con Quality Gate rojo;
 - certificar siempre el HEAD exacto;
-- cobertura diferencial mínima de 80% en líneas y 70% en ramas cuando existan ramas;
-- para lógica HIGH nueva o modificada, buscar 100% de cobertura significativa sin agregar pruebas artificiales.
+- cobertura diferencial obligatoria de 100% en líneas y 100% en ramas cuando existan ramas;
+- para lógica HIGH nueva o modificada, además mantener 100% de métodos significativos cuando corresponda, sin agregar pruebas artificiales.
 
 La cobertura se utiliza como señal de zonas sin protección, no como sustituto de pruebas correctas.
 
