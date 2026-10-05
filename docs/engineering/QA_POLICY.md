@@ -116,18 +116,14 @@ No cuenta como solución:
 
 La cobertura es una señal estructural y no demuestra por sí sola que las pruebas sean buenas.
 
-Piso automático para código ejecutable nuevo o modificado:
+Quality Gate obligatorio para código ejecutable nuevo o modificado:
 
-- **Lines >= 80%**;
-- **Branches >= 70%** cuando existan ramas.
+- **Lines = 100%**;
+- **Branches = 100%** cuando existan ramas.
 
-Para lógica HIGH nueva o modificada, el objetivo de ingeniería es:
+El 100% se exige para LOW, MEDIUM y HIGH. Para lógica HIGH nueva o modificada también se busca **Methods significativos = 100%**.
 
-- **Lines significativas 100%**;
-- **Branches significativas 100%**;
-- **Methods significativos 100%**.
-
-No se crean pruebas sin comportamiento solo para alcanzar números.
+No se crean pruebas sin comportamiento solo para alcanzar números: cada prueba debe verificar comportamiento real aunque el gate exija 100%.
 
 El código histórico sigue una regla de mejora: si se toca una zona poco probada, su protección debe mejorar.
 
