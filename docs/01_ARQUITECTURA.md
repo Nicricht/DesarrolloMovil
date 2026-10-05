@@ -2,7 +2,7 @@
 
 ## 1. Objetivo arquitectónico
 
-Construir un MVP Android simple de demostrar, mantenible y alineado con las restricciones del caso: Kotlin, Jetpack Compose, Material Design 3, MVVM, Room/SQLite, Retrofit, Spring Boot, API REST, microservicios y pruebas unitarias.
+Construir un MVP Android simple de demostrar, mantenible y alineado con las restricciones del caso: Kotlin en Android y backend, Jetpack Compose, Material Design 3, MVVM, Room/SQLite, Retrofit, Spring Boot, API REST, microservicios y pruebas unitarias.
 
 ## 2. Vista de contexto
 
@@ -10,7 +10,7 @@ Construir un MVP Android simple de demostrar, mantenible y alineado con las rest
 flowchart LR
     U[Cliente / Asegurado]
     APP[Aplicación Android]
-    API[Backend Spring Boot]
+    API[Backend Kotlin + Spring Boot]
     DATA[(Datos ficticios)]
     NOTIF[Servicio de notificaciones]
 
@@ -198,7 +198,7 @@ Aunque no habrá login real, el proyecto debe:
 
 ```text
 app/
-└── src/main/java/.../
+└── src/main/kotlin/...//
     ├── data/
     │   ├── local/
     │   ├── remote/
@@ -221,7 +221,7 @@ app/
 ```text
 backend/
 ├── siniestros-service/
-│   └── src/main/java/.../
+│   └── src/main/kotlin/...//
 │       ├── controller/
 │       ├── service/
 │       ├── repository/
@@ -229,7 +229,7 @@ backend/
 │       ├── dto/
 │       └── exception/
 └── notificaciones-service/
-    └── src/main/java/.../
+    └── src/main/kotlin/...//
         ├── controller/
         ├── service/
         ├── repository/
