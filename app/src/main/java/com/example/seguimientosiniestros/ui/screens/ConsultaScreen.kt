@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.example.seguimientosiniestros.domain.validation.ConsultaSiniestroValidator
 import com.example.seguimientosiniestros.ui.components.BotonPrincipal
 import com.example.seguimientosiniestros.ui.components.PantallaBase
 import com.example.seguimientosiniestros.ui.styles.FormaCampo
@@ -20,6 +21,7 @@ fun ConsultaScreen(
     onBuscar: (String) -> Unit
 ) {
     var identificador by rememberSaveable { mutableStateOf("") }
+    var errorIdentificador by rememberSaveable { mutableStateOf<String?>(null) }
 
     PantallaBase(
         titulo = "Consultar siniestro",
@@ -28,9 +30,19 @@ fun ConsultaScreen(
     ) {
         OutlinedTextField(
             value = identificador,
-            onValueChange = { identificador = it },
+            onValueChange = { nuevoValor ->
+                identificador = nuevoValor
+                if (errorIdentificador != null) {
+                    errorIdentificador = ConsultaSiniestroValidator.validar(nuevoValor)
+                }
+            },
             label = { Text(text = "Identificador") },
-            supportingText = { Text(text = "Ejemplo: SIN-2026-001") },
+            supportingText = {
+                Text(
+                    text = errorIdentificador ?: "Ejemplo: SIN-2026-001"
+                )
+            },
+            isError = errorIdentificador != null,
             singleLine = true,
             shape = FormaCampo,
             colors = coloresCampo(),
@@ -39,8 +51,13 @@ fun ConsultaScreen(
 
         BotonPrincipal(
             texto = "Buscar siniestro",
-            onClick = { onBuscar(identificador.trim()) },
-            enabled = identificador.isNotBlank()
+            onClick = {
+                errorIdentificador = ConsultaSiniestroValidator.validar(identificador)
+
+                if (errorIdentificador == null) {
+                    onBuscar(ConsultaSiniestroValidator.normalizar(identificador))
+                }
+            }
         )
     }
 }
