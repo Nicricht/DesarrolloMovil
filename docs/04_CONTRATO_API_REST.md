@@ -4,9 +4,25 @@
 
 Definir un contrato inicial entre la aplicación Android y los microservicios Spring Boot.
 
-Los endpoints de este documento son una **propuesta de implementación** basada en las funciones exigidas por el caso.
+Los endpoints de este documento describen el contrato del MVP. Algunos ya están implementados y otros continúan como propuesta para los flujos pendientes.
 
-Base propuesta:
+**Estado del backend real actual:**
+
+Implementados:
+
+- `GET /api/v1/health`,
+- `GET /api/v1/siniestros/{id}`,
+- `GET /api/v1/siniestros/{id}/historial`.
+
+Todavía propuestos/no implementados:
+
+- `POST /api/v1/siniestros`,
+- `GET /api/v1/siniestros`,
+- endpoints de evidencias,
+- endpoints de notificaciones,
+- `PATCH /api/v1/siniestros/{id}/estado`.
+
+Base:
 
 ```text
 /api/v1
@@ -204,7 +220,7 @@ Estados HTTP mínimos:
 
 ## 8. Retrofit
 
-**Estado actual:** base implementada para consulta de siniestro e historial.
+**Estado actual:** implementado y validado contra Spring Boot real para consulta de siniestro e historial.
 
 Implementado en Android:
 
@@ -243,6 +259,20 @@ A5 implementa actualmente:
 - estados de carga y error en la capa de presentación,
 - prueba instrumentada de integración Retrofit → Repository → Room usando MockWebServer.
 
-La validación final Android → Spring Boot real todavía depende de que el backend B1-B4 del colaborador esté disponible. Hasta ese momento no se considera demostrado el criterio E2E contra Spring Boot.
+MockWebServer se mantiene para pruebas de contrato aisladas de Retrofit, deserialización y mapeo. No se usa como sustituto del backend en la prueba E2E.
 
-Los endpoints de evidencias y notificaciones se implementarán únicamente cuando su flujo sea desarrollado.
+El E2E vigente levanta el Spring Boot real y valida el recorrido:
+
+```text
+Android
+→ Retrofit
+→ Spring Boot
+→ Repository
+→ Room
+→ ViewModel
+→ Compose
+→ Detalle
+→ Historial
+```
+
+La prueba instrumentada comprueba el caso `SIN-2026-001`, su estado y el historial visible en Compose. Los endpoints de evidencias, notificaciones, registro y cambio de estado se implementarán únicamente cuando sus flujos sean desarrollados.

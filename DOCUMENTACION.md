@@ -147,9 +147,9 @@ Los requerimientos funcionales representan acciones o comportamientos que el sis
 ## RF-01. Consultar un siniestro
 
 **Origen:** Caso oficial  
-**Estado actual:** Pendiente de reimplementación sobre la nueva base canónica.
+**Estado actual:** Implementado para el happy path actual.
 
-El sistema debe permitir que el cliente consulte un siniestro utilizando un identificador ficticio.
+El sistema permite que el cliente consulte un siniestro utilizando un identificador ficticio. El flujo vigente usa Retrofit contra el backend Spring Boot real, persiste/cachea la respuesta en Room y presenta el resultado mediante ViewModel + Compose.
 
 ### Criterios de aceptación
 
@@ -181,9 +181,9 @@ En caso de implementarse, utilizará únicamente información ficticia como:
 ## RF-03. Visualizar el detalle del siniestro
 
 **Origen:** Derivado del caso.  
-**Estado actual:** Pendiente de reimplementación sobre la nueva base canónica.
+**Estado actual:** Implementado para el happy path actual.
 
-Una vez consultado un siniestro, el sistema debe presentar la información necesaria para comprender el caso.
+Una vez consultado un siniestro, el sistema presenta la información necesaria para comprender el caso.
 
 La información considerada es:
 
@@ -200,9 +200,9 @@ La información considerada es:
 ## RF-04. Visualizar el estado y la etapa del siniestro
 
 **Origen:** Caso oficial.  
-**Estado actual:** Pendiente de reimplementación sobre la nueva base canónica.
+**Estado actual:** Implementado para el happy path actual.
 
-El sistema debe permitir que el cliente identifique claramente el estado actual de su siniestro.
+El sistema permite que el cliente identifique claramente el estado actual de su siniestro.
 
 Los estados definidos por el caso son:
 
@@ -216,9 +216,9 @@ Los estados definidos por el caso son:
 ## RF-05. Consultar el historial de gestiones
 
 **Origen:** Caso oficial.  
-**Estado actual:** Pendiente de reimplementación sobre la nueva base canónica.
+**Estado actual:** Implementado para el happy path actual.
 
-El sistema debe permitir revisar el historial de gestiones realizadas sobre el siniestro.
+El sistema permite revisar el historial de gestiones realizadas sobre el siniestro.
 
 Cada gestión puede mostrar:
 
@@ -334,7 +334,7 @@ La interfaz debe utilizar Material Design 3.
 ## RNF-06. Arquitectura MVVM
 
 **Origen:** Caso oficial  
-**Estado actual:** En implementación sobre la nueva base canónica.
+**Estado actual:** Cumplido para el flujo actual.
 
 La aplicación debe utilizar arquitectura MVVM para mantener separadas la interfaz, el estado y la lógica de presentación.
 
@@ -345,7 +345,7 @@ La estructura MVVM ya conecta las pantallas de Detalle, Seguimiento e Historial 
 ## RNF-07. Persistencia local con Room/SQLite
 
 **Origen:** Caso oficial  
-**Estado actual:** En implementación.
+**Estado actual:** Cumplido para el flujo actual.
 
 El frontend móvil debe utilizar Room/SQLite para la persistencia local requerida por el MVP.
 
@@ -358,7 +358,7 @@ La interfaz de usuario no accede directamente a Room.
 ## RNF-08. Integración mediante Retrofit
 
 **Origen:** Caso oficial  
-**Estado actual:** En implementación.
+**Estado actual:** Cumplido para consulta e historial.
 
 La aplicación Android incorpora Retrofit y converter Gson, DTOs para siniestro e historial, `SiniestroApiService` y un `RetrofitProvider` reutilizable.
 
@@ -371,7 +371,7 @@ La URL base académica para emulador es `http://10.0.2.2:8080/api/v1/`, donde `1
 
 A5 ya incorpora `RemoteSiniestroDataSource`, mappers DTO → dominio y `RemoteFirstSiniestroRepository`. La estrategia es remoto primero y Room como cache/fallback ante problemas de conectividad. `MainViewModel` consulta únicamente el contrato `SiniestroRepository`, por lo que no conoce Retrofit ni Room directamente.
 
-La integración Android está implementada y probada con un servidor HTTP simulado. La validación contra Spring Boot real queda pendiente hasta que el backend del colaborador esté disponible en el repositorio.
+La integración Android mantiene pruebas de contrato con MockWebServer y, además, ya fue validada de punta a punta contra el Spring Boot real del repositorio. El E2E ejecuta Android → Retrofit → Spring Boot → Repository → Room → ViewModel → Compose y comprueba Detalle e Historial.
 
 Las llamadas remotas se mantienen fuera de la capa de interfaz.
 
@@ -380,38 +380,44 @@ Las llamadas remotas se mantienen fuera de la capa de interfaz.
 ## RNF-09. Backend Spring Boot
 
 **Origen:** Caso oficial  
-**Estado actual:** Pendiente.
+**Estado actual:** Implementado para el MVP actual.
 
-El backend del MVP debe desarrollarse utilizando Spring Boot.
+El repositorio contiene un backend Spring Boot mínimo en `backend/`, con capas Controller, Service y Repository en memoria para datos ficticios. Expone el flujo necesario de consulta e historial y puede levantarse en CI para la prueba E2E real.
 
 ---
 
 ## RNF-10. API REST
 
 **Origen:** Caso oficial  
-**Estado actual:** Pendiente.
+**Estado actual:** Implementado para consulta e historial.
 
-El backend debe exponer una API REST que entregue la información necesaria para el funcionamiento del MVP.
+El backend expone actualmente:
+
+- `GET /api/v1/health`,
+- `GET /api/v1/siniestros/{id}`,
+- `GET /api/v1/siniestros/{id}/historial`.
+
+Los endpoints de evidencias, notificaciones, registro y cambio de estado siguen pendientes hasta que esos flujos se implementen.
 
 ---
 
 ## RNF-11. Microservicios
 
 **Origen:** Caso oficial  
-**Estado actual:** Pendiente.
+**Estado actual:** Parcial; todavía no cumplido completamente.
 
-El backend requerido por el caso debe utilizar microservicios Spring Boot.
+Actualmente existe **un solo servicio Spring Boot** que concentra consulta e historial. Esto permite respaldar el MVP y validar la integración real, pero todavía no demuestra una arquitectura de microservicios completa.
 
-La cantidad de servicios se mantendrá acotada a las responsabilidades necesarias para el MVP académico, evitando complejidad que no aporte al caso ni a la evaluación.
+Si la pauta exige separación física de servicios, deberá incorporarse al menos un segundo servicio con una responsabilidad real, por ejemplo notificaciones, evitando dividir artificialmente el backend solo para cumplir el nombre del patrón.
 
 ---
 
 ## RNF-12. Pruebas unitarias del backend
 
 **Origen:** Caso oficial  
-**Estado actual:** Pendiente.
+**Estado actual:** Implementado para el backend actual.
 
-El backend debe incorporar pruebas unitarias para validar sus funciones principales.
+El backend cuenta con pruebas automatizadas mediante Spring Boot + MockMvc que cubren consulta válida, recurso inexistente, historial ordenado y 404 de historial inexistente. El workflow `backend-ci.yml` ejecuta pruebas, genera reporte JaCoCo y empaqueta el backend.
 
 ---
 
@@ -516,12 +522,12 @@ El desarrollo debe concentrarse primero en el recorrido principal necesario para
 | RNF-04 | Jetpack Compose | Caso oficial | Cumplido |
 | RNF-05 | Material Design 3 | Caso oficial | Cumplido |
 | RNF-06 | MVVM | Caso oficial | Cumplido |
-| RNF-07 | Room/SQLite | Caso oficial | Pendiente |
-| RNF-08 | Retrofit | Caso oficial | Pendiente |
-| RNF-09 | Spring Boot | Caso oficial | Pendiente |
-| RNF-10 | API REST | Caso oficial | Pendiente |
-| RNF-11 | Microservicios | Caso oficial | Pendiente |
-| RNF-12 | Pruebas unitarias backend | Caso oficial | Pendiente |
+| RNF-07 | Room/SQLite | Caso oficial | Cumplido para el flujo actual |
+| RNF-08 | Retrofit | Caso oficial | Cumplido: consulta e historial |
+| RNF-09 | Spring Boot | Caso oficial | Cumplido para el MVP actual |
+| RNF-10 | API REST | Caso oficial | Cumplido: consulta e historial |
+| RNF-11 | Microservicios | Caso oficial | Parcial; falta separación real en más de un servicio |
+| RNF-12 | Pruebas unitarias backend | Caso oficial | Implementado para el backend actual |
 | RNF-13 | Usabilidad | Caso oficial | En progreso |
 | RNF-14 | Privacidad | Caso oficial | Cumplido actualmente |
 | RNF-15 | Seguridad | Caso oficial | Transversal |
@@ -579,23 +585,24 @@ Actualmente el repositorio contiene la nueva base canónica Android Studio:
 - cleartext HTTP habilitado únicamente en build debug para permitir la conexión académica al host local desde el emulador,
 - pruebas unitarias con MockWebServer que validan rutas y deserialización del contrato REST,
 - prueba instrumentada que valida respuesta remota → dominio → cache Room,
-- pruebas unitarias de estados oficiales, construcción de rutas, orden de etapas y mapeo de entidades.
+- pruebas unitarias de estados oficiales, construcción de rutas, orden de etapas y mapeo de entidades,
+- backend Spring Boot mínimo en `backend/` con endpoints reales de consulta, historial y health,
+- pruebas automatizadas de backend con MockMvc y workflow dedicado,
+- E2E instrumentado contra Spring Boot real que valida Android → Retrofit → Spring Boot → Repository → Room → ViewModel → Compose → Detalle → Historial.
 
-La aplicación ya inicia en una navegación Compose básica y las pantallas comparten un sistema visual reutilizable. El flujo Consulta → Detalle → Seguimiento/Historial está conectado a un Repository remoto primero: intenta obtener siniestro e historial mediante Retrofit, actualiza Room como cache y puede usar datos locales cuando la red no está disponible. El cliente Android está preparado; falta validar el flujo contra el backend Spring Boot real cuando el bloque B1-B4 del colaborador esté disponible.
+La aplicación ya inicia en una navegación Compose básica y las pantallas comparten un sistema visual reutilizable. El flujo Consulta → Detalle → Seguimiento/Historial está conectado a un Repository remoto primero: obtiene siniestro e historial mediante Retrofit desde Spring Boot, actualiza Room como cache y puede usar datos locales cuando la red no está disponible. El happy path de consulta e historial ya fue demostrado de punta a punta en CI.
 
 ## 6.2 Pendiente de reimplementación y desarrollo
 
 A partir de esta base falta implementar:
 
-- validar A5 contra el backend Spring Boot real,
-- backend Spring Boot,
-- microservicios,
-- implementación real del API REST en backend,
+- completar el requisito de microservicios si la pauta exige más de un servicio real,
+- formularios y validaciones visuales pendientes según pauta,
+- validaciones centralizadas/desacopladas,
 - evidencias con imágenes/PDF/cámara,
 - notificaciones,
 - actualización remota de estados,
-- pruebas unitarias del backend,
-- integración completa Android ↔ backend,
+- endpoints REST asociados a los flujos que todavía no existen,
 - definición final del registro de siniestro según la rúbrica.
 
 Las tareas de implementación deben seguir el orden y los responsables definidos en Trello.
@@ -657,9 +664,9 @@ La prioridad es completar primero lo obligatorio del caso y evitar funcionalidad
 
 ## 10.0 Responsables asignados
 
-- **Nicolás Iván Vega Linero:** GitHub `@Nicricht`, Trello `@nicolasivanvegalinero`. Responsable principal de Room, Retrofit y cambios de estado/notificaciones.
-- **Colaborador del repositorio:** responsable principal de Spring Boot, endpoints, pruebas de backend, evidencias, UI/UX y microservicio de notificaciones.
-- **Ambos:** integración, pruebas E2E, privacidad/seguridad, validación final, documentación de cierre y release.
+- **Nicolás Iván Vega Linero:** GitHub `@Nicricht`, Trello `@nicolasivanvegalinero`. Lleva la ruta crítica: Room, Retrofit, backend mínimo de respaldo, integración, formularios/validaciones y evidencias.
+- **Colaborador del repositorio:** bloque técnico real pero no bloqueante: estados UI (loading/error/vacío/confirmaciones), animaciones Compose y pulido Material 3; después podrá apoyar UI tests/notificaciones UI.
+- **Ambos:** auditoría final criterio por criterio, privacidad/seguridad, validación de entrega, documentación de cierre y release.
 
 ## Sprint 0 · Documentación inicial
 
@@ -695,22 +702,22 @@ Este sprint corresponde a la **unión de los antiguos Sprint 3 y Sprint 4**.
 5. **A2 · Room: DAO y base de datos** ✅
 6. **A3 · Room: repositorio local y pruebas** ✅
 7. **A4 · Retrofit: configuración, DTOs y ApiService** ✅
-8. **A5 · Retrofit: repositorio remoto + ViewModel** ⏳ implementación Android lista; validación Spring Boot pendiente
+8. **A5 · Retrofit: repositorio remoto + ViewModel** ✅ validado contra Spring Boot real en E2E
 
-### Colaborador del repositorio
+### Backend de respaldo e integración
 
-1. **B1 · Spring Boot base**
-2. **B2 · Endpoint de consulta**
-3. **B3 · Endpoint de historial**
-4. **B4 · Pruebas unitarias y CI**
-5. **B5 · Evidencia: selector de imagen y PDF**
-6. **B6 · Evidencia: cámara y permisos**
+El bloque B1-B4 dejó de depender del colaborador y fue cubierto en la ruta crítica de Nicolás para evitar bloquear la entrega:
 
-### Ambos
+1. **Spring Boot base** ✅
+2. **Endpoint de consulta** ✅
+3. **Endpoint de historial** ✅
+4. **Pruebas backend + CI** ✅
 
-1. **I1 · Integrar estado e historial con backend**
-2. **I2 · Integrar Room + API**
-3. **I3 · Prueba E2E consulta → historial**
+### Integraciones compartidas
+
+1. **I1 · Integrar estado e historial con backend** — revisar criterio exacto en Trello antes de cerrar.
+2. **I2 · Integrar Room + API** — revisar criterio exacto en Trello antes de cerrar.
+3. **I3 · Prueba E2E consulta → historial** — evidencia técnica existente; revisar criterio exacto en Trello antes de cerrar.
 
 ### Criterio de cierre del Sprint 3
 
@@ -741,11 +748,10 @@ El Sprint 3 se considera terminado cuando:
 
 ### Colaborador del repositorio
 
-- estados loading/error/empty,
-- confirmaciones,
-- consistencia Material Design 3,
-- microservicio mínimo de notificaciones,
-- prueba unitaria básica del servicio.
+- estados UI loading/error/vacío y confirmaciones,
+- animaciones Compose,
+- pulido y consistencia Material Design 3,
+- después UI tests/notificaciones UI si el tiempo y la pauta lo requieren.
 
 ### Ambos
 
@@ -850,7 +856,7 @@ flowchart LR
     UC2 --> UC5
 ```
 
-**Estado actual:** consulta, detalle, estado e historial ya existen con datos ficticios locales. Evidencias y notificaciones están pendientes. El registro queda sujeto a la revisión de la rúbrica.
+**Estado actual:** consulta, detalle, estado e historial ya funcionan con datos ficticios obtenidos desde el backend Spring Boot real y cacheados en Room. Evidencias y notificaciones están pendientes. El registro queda sujeto a la revisión de la rúbrica.
 
 ## 11.2 Diagrama de arquitectura general
 
@@ -889,10 +895,8 @@ flowchart TB
 
 **Estado actual de la arquitectura:**
 
-- **Implementado:** UI Compose, Material 3, ViewModel, Repository y modelos de dominio.
-- **Sprint 3:** Room/SQLite y backend Spring Boot/API REST.
-- **Sprint 4:** Retrofit e integración remota.
-- **Sprint 5:** notificaciones y actualización de estado.
+- **Implementado:** UI Compose, Material 3, ViewModel, Repository, modelos de dominio, Room/SQLite, Retrofit, backend Spring Boot mínimo, API REST de consulta/historial y E2E real.
+- **Pendiente:** evidencias, notificaciones, actualización remota de estado y, si la pauta lo exige literalmente, separar responsabilidades en más de un microservicio real.
 
 ## 11.3 Diagrama del modelo de datos
 
@@ -954,7 +958,7 @@ CERRADO
 
 ## 11.4 Diagrama de secuencia de consulta
 
-El siguiente diagrama muestra el flujo objetivo cuando Android ya esté conectado al backend. Actualmente la aplicación llega hasta el repositorio ficticio local. Room, Retrofit y Spring Boot se incorporan en Sprint 3 y Sprint 4.
+El siguiente diagrama representa el flujo actual de consulta e historial. Este recorrido ya fue validado con una prueba E2E instrumentada contra Spring Boot real; MockWebServer se mantiene para pruebas de contrato aisladas de Retrofit, pero no sustituye esta validación de punta a punta.
 
 ```mermaid
 sequenceDiagram
