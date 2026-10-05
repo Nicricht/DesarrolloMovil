@@ -8,8 +8,8 @@ from pathlib import Path
 
 BASE = sys.argv[1] if len(sys.argv) > 1 else ""
 RISK = os.getenv("FIRST_PASS_RISK", "MEDIUM").upper()
-LINE_MIN = 100.0 if RISK == "HIGH" else 80.0
-BRANCH_MIN = 100.0 if RISK == "HIGH" else 70.0
+LINE_MIN = 100.0
+BRANCH_MIN = 100.0
 
 if not BASE or BASE == "null" or set(BASE) == {"0"}:
     try:
