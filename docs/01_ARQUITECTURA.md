@@ -198,7 +198,7 @@ Aunque no habrá login real, el proyecto debe:
 
 ```text
 app/
-└── src/main/kotlin/...//
+└── src/main/kotlin/.../
     ├── data/
     │   ├── local/
     │   ├── remote/
@@ -221,7 +221,7 @@ app/
 ```text
 backend/
 ├── siniestros-service/
-│   └── src/main/kotlin/...//
+│   └── src/main/kotlin/.../
 │       ├── controller/
 │       ├── service/
 │       ├── repository/
@@ -229,7 +229,7 @@ backend/
 │       ├── dto/
 │       └── exception/
 └── notificaciones-service/
-    └── src/main/kotlin/...//
+    └── src/main/kotlin/.../
         ├── controller/
         ├── service/
         ├── repository/
