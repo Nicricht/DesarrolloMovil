@@ -19,7 +19,7 @@ if missing:
     sys.exit(1)
 
 qa = Path("docs/engineering/QA_POLICY.md").read_text(encoding="utf-8")
-for text in ["Lines >= 80%", "Branches >= 70%", "RED → GREEN", "HEAD exacto"]:
+for text in ["Lines = 100%", "Branches = 100%", "RED → GREEN", "HEAD exacto"]:
     if text not in qa:
         print(f"QA_POLICY.md no contiene la regla obligatoria: {text}")
         sys.exit(1)
