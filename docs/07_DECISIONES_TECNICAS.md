@@ -65,7 +65,7 @@ No se agregará más complejidad arquitectónica mientras no sea necesaria.
 
 ## 5. Backend
 
-**Decisión inicial:** Spring Boot.
+**Decisión actual:** Kotlin + Spring Boot.
 
 Se mantendrán responsabilidades separadas para:
 
@@ -163,7 +163,7 @@ No se trabajará directamente sobre main.
 
 | Tema | Decisión |
 |---|---|
-| Backend | Spring Boot |
+| Backend | Kotlin + Spring Boot |
 | Base de datos backend | H2 |
 | Android | Kotlin + Compose |
 | Arquitectura | MVVM |

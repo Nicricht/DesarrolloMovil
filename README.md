@@ -69,6 +69,7 @@ La documentación distingue entre:
 - Retrofit
 
 **Backend**
+- Kotlin
 - Spring Boot
 - API REST
 - Microservicios

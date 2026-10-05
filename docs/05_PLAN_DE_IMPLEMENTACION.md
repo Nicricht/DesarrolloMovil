@@ -46,7 +46,7 @@ La navegación funciona y la estructura del proyecto es comprensible.
 
 ### Fase 2 · Backend mínimo
 
-Crear:
+Crear con Kotlin + Spring Boot:
 
 - siniestros-service.
 - Modelo de siniestro.

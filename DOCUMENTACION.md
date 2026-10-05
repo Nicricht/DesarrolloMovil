@@ -300,7 +300,7 @@ La aplicación móvil debe estar orientada a teléfonos Android.
 **Origen:** Caso oficial  
 **Estado actual:** Cumplido.
 
-El frontend móvil debe desarrollarse utilizando Kotlin.
+La aplicación Android y el backend académico deben desarrollarse utilizando Kotlin.
 
 ---
 
