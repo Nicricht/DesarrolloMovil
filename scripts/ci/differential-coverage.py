@@ -20,7 +20,7 @@ if not BASE or BASE == "null" or set(BASE) == {"0"}:
 def changed_lines(base: str):
     cmd = [
         "git", "diff", "--unified=0", f"{base}...HEAD", "--",
-        "app/src/main/java", "backend/src/main/java"
+        "app/src/main/java", "backend/src/main/java", "backend/src/main/kotlin"
     ]
     output = subprocess.check_output(cmd, text=True, errors="replace")
     result = {}
@@ -65,6 +65,7 @@ def load_report(xml_path: Path, source_root: str):
 reports = [
     (Path("app/build/reports/jacoco/jacocoDebugUnitTestReport/jacocoDebugUnitTestReport.xml"), "app/src/main/java"),
     (Path("backend/target/site/jacoco/jacoco.xml"), "backend/src/main/java"),
+    (Path("backend/target/site/jacoco/jacoco.xml"), "backend/src/main/kotlin"),
 ]
 
 all_coverage = {}

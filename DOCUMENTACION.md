@@ -382,7 +382,7 @@ Las llamadas remotas se mantienen fuera de la capa de interfaz.
 **Origen:** Caso oficial  
 **Estado actual:** Implementado para el MVP actual.
 
-El repositorio contiene un backend Spring Boot mínimo en `backend/`, con capas Controller, Service y Repository en memoria para datos ficticios. Expone el flujo necesario de consulta e historial y puede levantarse en CI para la prueba E2E real.
+El repositorio contiene un backend Spring Boot implementado en Kotlin en `backend/`, con capas Controller, Service y Repository en memoria para datos ficticios. Expone el flujo necesario de consulta e historial y puede levantarse en CI para la prueba E2E real.
 
 ---
 
@@ -586,7 +586,7 @@ Actualmente el repositorio contiene la nueva base canónica Android Studio:
 - pruebas unitarias con MockWebServer que validan rutas y deserialización del contrato REST,
 - prueba instrumentada que valida respuesta remota → dominio → cache Room,
 - pruebas unitarias de estados oficiales, construcción de rutas, orden de etapas y mapeo de entidades,
-- backend Spring Boot mínimo en `backend/` con endpoints reales de consulta, historial y health,
+- backend Spring Boot en Kotlin en `backend/` con endpoints reales de consulta, historial y health,
 - pruebas automatizadas de backend con MockMvc y workflow dedicado,
 - E2E instrumentado contra Spring Boot real que valida Android → Retrofit → Spring Boot → Repository → Room → ViewModel → Compose → Detalle → Historial.
 
@@ -895,7 +895,7 @@ flowchart TB
 
 **Estado actual de la arquitectura:**
 
-- **Implementado:** UI Compose, Material 3, ViewModel, Repository, modelos de dominio, Room/SQLite, Retrofit, backend Spring Boot mínimo, API REST de consulta/historial y E2E real.
+- **Implementado:** UI Compose, Material 3, ViewModel, Repository, modelos de dominio, Room/SQLite, Retrofit, backend Spring Boot en Kotlin, API REST de consulta/historial y E2E real.
 - **Pendiente:** evidencias, notificaciones, actualización remota de estado y, si la pauta lo exige literalmente, separar responsabilidades en más de un microservicio real.
 
 ## 11.3 Diagrama del modelo de datos
