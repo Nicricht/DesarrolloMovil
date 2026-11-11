@@ -182,7 +182,7 @@ public class SiniestrosService {
         boolean asegurado = "ASEGURADO".equalsIgnoreCase(actor.rol());
         return gestiones.findBySiniestroIdOrderByFechaHoraAscIdAsc(s.id).stream()
             .filter(g -> !asegurado || g.visibleAsegurado)
-            .map(g -> new GestionResponse(String.valueOf(g.id), g.fechaHora.toString(), g.descripcion, g.etapaDestino))
+            .map(g -> new GestionResponse(String.valueOf(g.id), g.fechaHora.toString(), g.descripcion, g.etapaDestino, g.responsable))
             .toList();
     }
 
@@ -219,7 +219,7 @@ public class SiniestrosService {
         }
         Gestion g = agregarGestion(s, actor.id(), "GESTION", texto(request.descripcion(), "descripcion"),
             request.visibleAsegurado(), null, false);
-        return new GestionResponse(g.id.toString(), g.fechaHora.toString(), g.descripcion, null);
+        return new GestionResponse(g.id.toString(), g.fechaHora.toString(), g.descripcion, null, g.responsable);
     }
 
     public SolicitudResponse solicitar(String numero, Actor actor, SolicitudRequest request) {
@@ -424,7 +424,7 @@ public class SiniestrosService {
         };
         return new SiniestroResponse(s.numero, s.numero, s.compania, s.tipoNombre,
             s.fechaOcurrencia.toString(), s.fechaReporte.toString(), s.etapa, s.equipo,
-            s.actualizado.toString(), paso, s.fueraDePlazo);
+            s.actualizado.toString(), paso, s.fueraDePlazo, s.resultado, s.mensajeCierre);
     }
 
     private SolicitudResponse convertir(SolicitudDocumento s) {

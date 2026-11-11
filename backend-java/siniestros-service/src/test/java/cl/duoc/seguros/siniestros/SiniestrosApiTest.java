@@ -145,7 +145,9 @@ class SiniestrosApiTest {
                 .contentType(MediaType.APPLICATION_JSON).content(
                     "{\"etapa\":\"Cerrado\",\"resultado\":\"Aprobado\",\"mensajeCierre\":\"La compañía aprobó el caso\"}"))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.estado").value("Cerrado"));
+            .andExpect(jsonPath("$.estado").value("Cerrado"))
+            .andExpect(jsonPath("$.resultadoCierre").value("Aprobado"))
+            .andExpect(jsonPath("$.mensajeCierre").value("La compañía aprobó el caso"));
         mvc.perform(multipart("/api/v1/siniestros/{numero}/documentos", numero)
                 .file(pdf).param("tipo", "Fotografía del daño")
                 .header("X-Actor-Id", RUT).header("X-Role", "ASEGURADO"))
