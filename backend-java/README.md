@@ -1,11 +1,12 @@
 # Microservicios Java de Seguros BPO
 
-Dos aplicaciones independientes Spring Boot con Java 21 y Maven.
+Tres aplicaciones independientes Spring Boot con Java 21 y Maven. Un API Gateway con Spring Cloud Gateway centraliza las rutas y la documentación Swagger/OpenAPI.
 
 | Servicio | Puerto | Responsabilidad |
 | --- | --- | --- |
+| api-gateway | 8080 | Entrada única REST y Swagger UI unificado |
 | catalogos-service | 8081 | Compañías activas e inactivas, líneas de seguro, tipos de siniestro y documentos habituales |
-| siniestros-service | 8080 | Denuncia, seguimiento, asignación, historial, cambios de etapa, documentos y avisos persistentes |
+| siniestros-service | 8082 | Denuncia, seguimiento, asignación, historial, cambios de etapa, documentos y avisos persistentes |
 
 El catálogo contiene exclusivamente los datos ficticios de los anexos. Los siniestros se almacenan en H2 (archivo local `datos/siniestros.mv.db`), con JPA. No hay conexiones a aseguradoras reales.
 
@@ -26,7 +27,31 @@ En una segunda terminal, también dentro de `backend-java`:
 mvn -pl siniestros-service spring-boot:run
 ```
 
-Las URL base son `http://localhost:8081/api/v1/` y `http://localhost:8080/api/v1/`. En un emulador Android, el host local se alcanza mediante `http://10.0.2.2:8080/api/v1/`.
+En una tercera terminal:
+
+```bash
+mvn -pl api-gateway spring-boot:run
+```
+
+El API Gateway ofrece la única URL pública de desarrollo: `http://localhost:8080/api/v1/`. Los servicios internos ejecutan en `http://localhost:8081` (catálogos) y `http://localhost:8082` (siniestros). En un emulador Android, el host local se alcanza mediante `http://10.0.2.2:8080/api/v1/`, manteniendo el contrato existente de Retrofit.
+
+## Swagger / OpenAPI
+
+Con los tres procesos ejecutándose, abre **http://localhost:8080/swagger-ui.html** y selecciona **Siniestros** o **Catalogos** en el desplegable de especificaciones.
+
+| URL | Función |
+| --- | --- |
+| `http://localhost:8080/swagger-ui.html` | Swagger UI unificado |
+| `http://localhost:8080/openapi/siniestros` | Especificación OpenAPI del servicio de siniestros a través del Gateway |
+| `http://localhost:8080/openapi/catalogos` | Especificación OpenAPI del servicio de catálogos a través del Gateway |
+| `http://localhost:8082/swagger-ui.html` | Swagger del servicio de siniestros directamente |
+| `http://localhost:8081/swagger-ui.html` | Swagger del servicio de catálogos directamente |
+
+Desde Swagger, los endpoints de siniestros requieren los encabezados **`X-Actor-Id` y `X-Role`** para la identidad simulada del MVP. Por ejemplo, `X-Actor-Id: 15.842.371-5` y `X-Role: ASEGURADO`. Estos encabezados no constituyen autenticación y pueden ser suplantados.
+
+El Gateway reenvía las rutas `/api/v1/siniestros/**` y `/api/v1/avisos/**` al servicio de siniestros, y `/api/v1/companias/**` y `/api/v1/tipos-siniestro/**` al servicio de catálogos. La ruta `/api/v1/health` indica el estado del propio Gateway. Las URLs internas pueden cambiarse mediante `SINIESTROS_BASE_URL` y `CATALOGOS_BASE_URL` en el entorno del Gateway.
+
+Las pruebas de integración incluyen contratos OpenAPI generados y enrutamiento HTTP a servidores simulados, sin llamadas reales ni dependencia de los sistemas de una aseguradora.
 
 ## Flujo de ejemplo
 
@@ -72,4 +97,4 @@ La respuesta de detalle conserva los campos ya utilizados por Retrofit: `id`, `t
 
 ## Alcance y límites
 
-Es un backend académico con almacenamiento local H2. No incluye inicio de sesión real, control de permisos criptográficamente seguro, notificaciones push externas ni sincronización offline del móvil. Los encabezados de identidad pueden suplantarse, por lo que **no debe exponerse públicamente**. El frontend del ZIP se conserva intacto y su integración y pruebas instrumentadas deben verificarse por separado. Los datos de demostración deben ser exclusivamente ficticios. No se realizan pagos ni operaciones con aseguradoras.
+Es un backend académico con almacenamiento local H2 y un Gateway de desarrollo que no incorpora autenticación. No incluye inicio de sesión real, control de permisos criptográficamente seguro, notificaciones push externas ni sincronización offline del móvil. Los encabezados de identidad pueden suplantarse, por lo que **no debe exponerse públicamente**. El frontend del ZIP se conserva intacto y su integración y pruebas instrumentadas deben verificarse por separado. Los datos de demostración deben ser exclusivamente ficticios. No se realizan pagos ni operaciones con aseguradoras.
