@@ -1,0 +1,35 @@
+name: Backend Java Docker Compose CI
+
+on:
+  push:
+    paths:
+      - 'backend-java/**'
+      - '.github/workflows/backend-java-docker-ci.yml'
+  pull_request:
+    paths:
+      - 'backend-java/**'
+      - '.github/workflows/backend-java-docker-ci.yml'
+
+jobs:
+  docker-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Docker Compose
+        working-directory: backend-java
+        run: docker compose config --quiet
+      - name: Build images and start services
+        working-directory: backend-java
+        run: docker compose up --build -d --wait --wait-timeout 210
+      - name: Verify Gateway and Swagger over HTTP
+        working-directory: backend-java
+        run: bash scripts/docker-smoke.sh
+      - name: Show container logs on failure
+        if: failure()
+        working-directory: backend-java
+        run: docker compose logs --tail=150
+      - name: Stop test environment
+        if: always()
+        working-directory: backend-java
+        run: docker compose down --remove-orphans
