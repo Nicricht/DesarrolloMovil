@@ -10,7 +10,41 @@ Tres aplicaciones independientes Spring Boot con Java 21 y Maven. Un API Gateway
 
 El catálogo contiene exclusivamente los datos ficticios de los anexos. Los siniestros se almacenan en H2 (archivo local `datos/siniestros.mv.db`), con JPA. No hay conexiones a aseguradoras reales.
 
-## Ejecutar
+## Ejecutar todo con Docker (recomendado)
+
+Instala **Docker Desktop** con Docker Compose v2. Para levantar los tres servicios sin instalar Java/Maven localmente, desde la carpeta `backend-java`:
+
+```bash
+docker compose up --build -d --wait
+```
+
+Accesos desde el computador:
+- **Swagger UI unificado:** http://localhost:8080/swagger-ui.html
+- **Gateway REST:** http://localhost:8080/api/v1/
+- **Estado del Gateway:** http://localhost:8080/api/v1/health
+
+Los servicios internos escuchan en los puertos 8081 (Catálogos) y 8082 (Siniestros), sin exponerlos al computador. Docker Compose utiliza red interna entre los tres procesos. El puerto del Gateway se publica solo en `127.0.0.1` y puede cambiarse con `GATEWAY_PORT` en un fichero `.env` creado a partir de `.env.example`. Si cambias el puerto publicado, cambia también las URL del navegador.
+
+Comandos para administrar el entorno:
+
+```bash
+docker compose ps
+docker compose logs -f api-gateway
+docker compose down
+```
+
+La base H2 reside en el volumen nombrado `siniestros-data`, y **`docker compose down` no lo elimina**. No utilices `docker compose down -v` si necesitas conservar los siniestros. Los Dockerfiles emplean build Maven multietapa con Java 21, imagen JRE para ejecución y usuario no privilegiado. El Gateway mantiene la URL Android `http://10.0.2.2:8080/api/v1/` cuando se ejecuta en un emulador Android.
+
+Pruebas automáticas: `mvn clean verify` ejecuta los tests Java y el workflow **Backend Java Docker Compose CI** construye los contenedores, espera el estado saludable y ejecuta pruebas REST y Swagger a través del Gateway. Para repetir localmente las verificaciones HTTP de CI necesitas `curl`, `jq` y Bash:
+
+```bash
+bash scripts/docker-smoke.sh
+bash scripts/docker-e2e.sh
+```
+
+El backend académico usa encabezados de rol simulados, **no tiene autenticación segura**, por lo que no se debe publicar el Gateway hacia Internet ni utilizar datos reales. Los contenedores no constituyen un despliegue productivo.
+
+## Ejecutar sin Docker
 
 Necesitas JDK 21 y Maven 3.6.3 o superior.
 
