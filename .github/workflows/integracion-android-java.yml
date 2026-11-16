@@ -122,10 +122,7 @@ jobs:
           arch: x86_64
           profile: pixel_4
           disable-animations: true
-          script: |
-            cd android-integrado
-            chmod +x gradlew
-            ./gradlew :app:connectedDebugAndroidTest --no-daemon
+          script: cd android-integrado && chmod +x gradlew && ./gradlew :app:connectedDebugAndroidTest --no-daemon
       - name: Guardar pruebas instrumentadas
         if: always()
         uses: actions/upload-artifact@v4
