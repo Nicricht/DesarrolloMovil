@@ -78,14 +78,14 @@ def preparar():
             '                            onVolver = { navController.navigateUp() }\n'
             '                        )\n'
             '                    }')
-        editar(navegacion,
-            '                    texto = "Estadísticas",',
+        sustituir_patron(navegacion,
+            r'(?=                OpcionInferior\\(\\n                    texto = "Estadísticas",)',
+            '                OpcionInferior(\n'
             '                    texto = "Servidor",\n'
             '                    icono = R.drawable.ic_seguir,\n'
             '                    seleccionada = rutaActual == Ruta.Servidor.ruta,\n'
             '                    onClick = { onNavegar(Ruta.Servidor.ruta) }\n'
-            '                )\n                OpcionInferior(\n'
-            '                    texto = "Estadísticas",')
+            '                )\n')
 
         datos = kotlin / "data" / "SiniestroDbHelper.kt"
         sustituir_patron(datos,
