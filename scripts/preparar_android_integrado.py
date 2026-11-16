@@ -147,7 +147,7 @@ def preparar():
                               "onRegistroExitoso: suspend (FormularioUiState) -> String")
         formulario.write_text(texto, encoding="utf-8")
         sustituir_patron(formulario,
-            r"    fun registrarReporte\(\) \{.*?\n    \}\n(?=    if \(duplicado != null\))",
+            r"    fun registrarReporte\(\) \{.*?\n    \}",
             '''    var registrando by remember { mutableStateOf(false) }
     fun registrarReporte() {
         if (registrando || viewModel.uiState.value.reporteExitoso) return
