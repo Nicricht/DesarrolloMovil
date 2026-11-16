@@ -79,7 +79,7 @@ def preparar():
             '                        )\n'
             '                    }')
         sustituir_patron(navegacion,
-            r'(?=                OpcionInferior\\(\\n                    texto = "Estadísticas",)',
+            r'(?=                OpcionInferior\(\n                    texto = "Estadísticas",)',
             '                OpcionInferior(\n'
             '                    texto = "Servidor",\n'
             '                    icono = R.drawable.ic_seguir,\n'
@@ -91,7 +91,7 @@ def preparar():
         sustituir_patron(datos,
             r"(?=    fun listar\(asegurado: Asegurado, busqueda: String = \"\")",
             '''    fun actualizarNumeroServidor(id: Long, numero: String): Boolean {
-        require(Regex("""SIN-\\d{2}-\\d{6}""").matches(numero)) { "Número remoto inválido" }
+        require(Regex("""SIN-\d{2}-\d{6}""").matches(numero)) { "Número remoto inválido" }
         return writableDatabase.update(
             "siniestros",
             ContentValues().apply { put("numero", numero) },
