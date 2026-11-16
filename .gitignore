@@ -1,0 +1,5 @@
+android-integrado/
+.idea/
+.gradle/
+**/build/
+backend-java/datos/
